@@ -5,7 +5,7 @@ Chumi.രസീത് (രസീത് is Malayalam for "receipt") is a free, si
 - **19 invoice templates**, any accent colour, your own logo
 - **Auto invoice**: enter a GST-inclusive total and a number of products, pick a category (IT and web, E-commerce, Services, Random) and it builds whole-number lines so that Subtotal + GST equals your total exactly, with no rounding line
 - **A4 PDF export** (multi-page, never cuts a row in half), print, or copy as text
-- Light and dark themes, a load intro where the name prints on a receipt, scroll reveals, page transitions and button animations (all disabled under `prefers-reduced-motion`)
+- Light and dark themes, a loading screen where the name prints on a receipt with a real progress bar (animated with [anime.js](https://animejs.com) v4 from the jsDelivr CDN, plain fade if it cannot load), scroll reveals, page transitions and button animations (all disabled under `prefers-reduced-motion`)
 
 ## Use it
 
@@ -28,4 +28,4 @@ python3 build.py
 | `src/templates.js` | the 19 templates and their SVG decorations |
 | `src/gen.js` | the exact-total generator |
 
-Fonts load from Google Fonts and the PDF library (html2canvas) loads from a CDN on first export.
+Fonts load from Google Fonts, anime.js loads from jsDelivr on page load, and the PDF library (html2canvas) loads from a CDN on first export.

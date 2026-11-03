@@ -208,14 +208,73 @@ function armReveals(){
     if(revIO)revIO.observe(el);else el.classList.add('in');
   });
 }
+/* ---------- loading intro (anime.js v4 from the CDN; a plain fade if it cannot load) ---------- */
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function whenAnime(cb){
+  const t0=performance.now();
+  (function poll(){
+    if(window.anime&&window.anime.animate)return cb(window.anime);
+    if(window.__animeFail||performance.now()-t0>2500)return cb(null);
+    setTimeout(poll,40);
+  })();
+}
 function runIntro(){
   const el=$('#intro'),root=document.documentElement;
-  const drop=()=>{if(el&&el.parentNode)el.remove()},base=()=>root.classList.remove('has-intro');
-  if(!el){base();return}
-  if(reduced()){drop();base();return}
-  el.addEventListener('animationend',e=>{if(e.target===el)drop()});
-  el.addEventListener('click',()=>{drop();base()});
-  setTimeout(drop,3800);setTimeout(base,5000);
+  if(!el||reduced()){if(el)el.remove();root.classList.remove('has-intro','anime-pending');return}
+  const bar=$('.in-bar i',el),pct=$('.in-pct',el),label=$('.in-state',el),st={v:0},lift={v:0};
+  let over=false;
+  const done=()=>{if(over)return;over=true;el.remove();root.classList.remove('has-intro','anime-pending')};
+  const paint=()=>{const v=Math.max(0,Math.min(100,st.v));bar.style.transform='scaleX('+(v/100)+')';pct.textContent=Math.round(v)+'%'};
+  el.addEventListener('click',done);
+  setTimeout(done,9000);
+  whenAnime(async A=>{
+    if(over)return;
+    const t0=performance.now();
+    let fo=false,pg=false;
+    const tgt=()=>30+(fo?40:0)+(pg?30:0);
+    const tweenTo=(v,ms)=>new Promise(res=>{
+      const end=()=>{st.v=v;paint();res()};
+      if(!A){bar.style.transition='transform .5s cubic-bezier(.22,1,.36,1)';return end()}
+      try{A.animate(st,{v,duration:ms,ease:'outQuad',onUpdate:paint,onComplete:end})}catch(e){end()}
+    });
+    const chase=()=>tweenTo(tgt(),tgt()>=100?500:650);
+    try{
+      if(A){
+        const {createTimeline,stagger}=A;
+        const tl=createTimeline({defaults:{ease:'outExpo'}});
+        tl.add('.in-shape',{opacity:[0,1],scale:[.3,1],duration:800,delay:stagger(110)},0)
+          .add('.in-s2',{rotate:[18,18],duration:800},0)
+          .add('.in-receipt',{opacity:[0,1],translateY:['-125%','0%'],duration:850},80)
+          .add('.in-logo>span',{opacity:[0,1],translateY:['100%','0%'],duration:700,delay:stagger(55)},520)
+          .add('.in-rule',{opacity:[0,1],scaleX:[0,1],duration:600},1050)
+          .add('.in-load',{opacity:[0,1],translateY:['40%','0%'],duration:600},1150);
+      }else root.classList.remove('anime-pending');
+    }catch(e){A=null;root.classList.remove('anime-pending')}
+    const fonts=Promise.race([
+      Promise.all(['800 1em "Bricolage Grotesque"','700 1em "Anek Malayalam"'].map(f=>document.fonts?document.fonts.load(f,'Chumiരസീത്'):0)),
+      wait(3000)
+    ]).catch(()=>{});
+    const page=new Promise(r=>document.readyState==='complete'?r():window.addEventListener('load',()=>r(),{once:true}));
+    fonts.then(()=>{fo=true;chase()});
+    page.then(()=>{pg=true;chase()});
+    chase();
+    await Promise.all([fonts,page,wait(Math.max(0,(A?1700:700)-(performance.now()-t0)))]);
+    if(over)return;
+    if(Math.round(st.v)<100)await chase();
+    if(over)return;
+    label.textContent='Ready';
+    try{
+      if(!A)throw 0;
+      const tl=A.createTimeline({defaults:{ease:'inCubic'}});
+      tl.add('.in-receipt',{translateY:['0%','140%'],rotate:[0,4],duration:600},0)
+        .add(lift,{v:100,duration:760,ease:'inOutExpo',onUpdate:()=>{el.style.clipPath='inset(0 0 '+lift.v+'% 0)'}},320)
+        .call(()=>root.classList.remove('has-intro'),460)
+        .call(done,1150);
+    }catch(e){
+      el.classList.add('leave');root.classList.remove('has-intro');
+      await wait(520);done();
+    }
+  });
 }
 
 /* ---------- editor: render ---------- */

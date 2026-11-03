@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chumi.രസീത്</title>
-<script>(function(){var d=document.documentElement;d.classList.add("js");try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches)d.classList.add("has-intro")}catch(e){}})()</script>
+<script>(function(){var d=document.documentElement;d.classList.add("js");try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches){d.classList.add("has-intro","anime-pending");var a=document.createElement("script");a.id="animejs";a.async=true;a.src="https://cdn.jsdelivr.net/npm/animejs@4/dist/bundles/anime.umd.min.js";a.onload=function(){window.__animeOk=1};a.onerror=function(){window.__animeFail=1};document.head.appendChild(a)}}catch(e){}})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;700&family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Lato:wght@400;700;900&family=Montserrat:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,400..700&family=Poppins:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&family=Anek+Malayalam:wght@500;700;800&display=swap" rel="stylesheet">
@@ -1158,36 +1158,31 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 .js [data-reveal="stagger"].in>*{animation:revealUp .65s var(--ease) backwards;animation-delay:calc(var(--i,0)*70ms)}
 
 /* load intro: a violet curtain with the wordmark, then it lifts */
-#intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;overflow:hidden;background:var(--intro-bg);color:var(--intro-fg);clip-path:inset(0);animation:introOut .7s var(--ease) 2s both;cursor:pointer}
-@keyframes introOut{to{clip-path:inset(0 0 100% 0);visibility:hidden}}
-/* the name is printed on a receipt that feeds in from the top, then tears away as the curtain lifts */
-.in-receipt{position:relative;z-index:1;width:min(640px,88vw);filter:drop-shadow(0 18px 20px rgba(20,8,70,.38));animation:inPrint 2.3s both}
-@keyframes inPrint{
-  0%{transform:translateY(-125%);animation-timing-function:var(--ease)}
-  28%{transform:translateY(0)}
-  80%{transform:translateY(0);animation-timing-function:var(--ease)}
-  100%{transform:translateY(135%) rotate(4deg)}
-}
+#intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;overflow:hidden;background:var(--intro-bg);color:var(--intro-fg);clip-path:inset(0);cursor:pointer;animation:introFailsafe 0s linear 12s forwards}
+@keyframes introFailsafe{to{visibility:hidden;pointer-events:none}}
+#intro.leave{opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility 0s linear .45s}
+/* a receipt prints the name while the page loads (animated with anime.js; plain fade if it cannot load) */
+html.anime-pending .in-shape,html.anime-pending .in-receipt,html.anime-pending .in-logo>span,html.anime-pending .in-rule,html.anime-pending .in-load{opacity:0}
+.in-receipt{position:relative;z-index:1;width:min(640px,88vw);filter:drop-shadow(0 18px 20px rgba(20,8,70,.38))}
 .in-paper{--s:24px;display:grid;justify-items:center;gap:18px;padding:44px 28px 64px;background:#fff;color:#1B1244;
   -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/var(--s) 100%;
   mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/var(--s) 100%}
 .in-logo{display:flex;align-items:baseline;justify-content:center;font:800 clamp(40px,10.5vw,92px)/1.1 var(--font-display);letter-spacing:-.04em;color:#1B1244}
-.in-logo>span{display:inline-block;animation:inLetter .7s var(--ease) both;animation-delay:calc(.55s + var(--i)*50ms)}
+.in-logo>span{display:inline-block}
 .in-logo>span:not(.ml){overflow:hidden;padding:.06em .01em .12em;margin-bottom:-.12em}
-.in-logo .ml{animation-name:inLetterMl}
 .in-logo .dot{color:#E8472B}
-@keyframes inLetter{from{transform:translateY(105%)}}
-@keyframes inLetterMl{from{opacity:0;transform:translateY(.45em)}}
-.in-rule{width:100%;border-top:3px dashed rgba(27,18,68,.32);transform-origin:0 0;animation:inLine .7s var(--ease) 1.2s both}
-@keyframes inLine{from{transform:scaleX(0)}}
-.in-cap{margin:0;font:600 12px/1 var(--font-mono);letter-spacing:.18em;text-transform:uppercase;color:#463E6B;animation:inCap .6s var(--ease) 1.3s both}
-@keyframes inCap{from{opacity:0;transform:translateY(8px)}}
-.in-shape{position:absolute;display:block;animation:shapeIn .9s var(--ease) both}
-.in-s1{width:34vmin;height:34vmin;border-radius:50%;background:var(--pop);right:-8vmin;bottom:-10vmin;animation-delay:.2s}
-.in-s2{width:20vmin;height:20vmin;border-radius:14px;background:var(--stamp);left:-5vmin;top:-5vmin;transform:rotate(18deg);animation-name:shapeIn2;animation-delay:.35s}
-.in-s3{width:7vmin;height:7vmin;border-radius:50%;background:var(--mint);left:14vmin;bottom:16vmin;animation-delay:.5s}
-@keyframes shapeIn2{from{opacity:0;transform:rotate(18deg) scale(.3)}}
-html.has-intro{--base:2.05s}
+.in-rule{width:100%;border-top:3px dashed rgba(27,18,68,.32);transform-origin:0 0}
+.in-load{width:100%;display:grid;gap:10px}
+.in-bar{height:12px;border:2px solid #1B1244;border-radius:999px;overflow:hidden;background:#fff}
+.in-bar i{display:block;height:100%;background:#5B3DF5;transform-origin:0 0;transform:scaleX(0)}
+.in-row{margin:0;display:flex;justify-content:space-between;font:600 12px/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:#463E6B}
+.in-pct{font-variant-numeric:tabular-nums}
+.in-shape{position:absolute;display:block}
+.in-s1{width:34vmin;height:34vmin;border-radius:50%;background:var(--pop);right:-8vmin;bottom:-10vmin}
+.in-s2{width:20vmin;height:20vmin;border-radius:14px;background:var(--stamp);left:-5vmin;top:-5vmin;transform:rotate(18deg)}
+.in-s3{width:7vmin;height:7vmin;border-radius:50%;background:var(--mint);left:14vmin;bottom:16vmin}
+/* the landing animation waits for the loader to lift */
+html.has-intro .hero *,html.has-intro .hero *::before,html.has-intro .hero *::after{animation-play-state:paused!important}
 
 /* route changes: View Transitions where supported, a fade-up otherwise */
 .top{view-transition-name:top}
@@ -1294,9 +1289,12 @@ html.vt [data-view].enter{animation:none}
   <span class="in-shape in-s1"></span><span class="in-shape in-s2"></span><span class="in-shape in-s3"></span>
   <div class="in-receipt">
     <div class="in-paper">
-      <div class="in-logo"><span style="--i:0">C</span><span style="--i:1">h</span><span style="--i:2">u</span><span style="--i:3">m</span><span style="--i:4">i</span><span style="--i:5" class="dot">.</span><span class="ml" lang="ml" style="--i:6">ര</span><span class="ml" lang="ml" style="--i:7">സീ</span><span class="ml" lang="ml" style="--i:8">ത്</span></div>
+      <div class="in-logo"><span>C</span><span>h</span><span>u</span><span>m</span><span>i</span><span class="dot">.</span><span class="ml" lang="ml">ര</span><span class="ml" lang="ml">സീ</span><span class="ml" lang="ml">ത്</span></div>
       <div class="in-rule"></div>
-      <p class="in-cap">Invoices that add up</p>
+      <div class="in-load">
+        <div class="in-bar"><i></i></div>
+        <p class="in-row"><span class="in-state">Loading</span><span class="in-pct">0%</span></p>
+      </div>
     </div>
   </div>
 </div>
@@ -1994,14 +1992,73 @@ function armReveals(){
     if(revIO)revIO.observe(el);else el.classList.add('in');
   });
 }
+/* ---------- loading intro (anime.js v4 from the CDN; a plain fade if it cannot load) ---------- */
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function whenAnime(cb){
+  const t0=performance.now();
+  (function poll(){
+    if(window.anime&&window.anime.animate)return cb(window.anime);
+    if(window.__animeFail||performance.now()-t0>2500)return cb(null);
+    setTimeout(poll,40);
+  })();
+}
 function runIntro(){
   const el=$('#intro'),root=document.documentElement;
-  const drop=()=>{if(el&&el.parentNode)el.remove()},base=()=>root.classList.remove('has-intro');
-  if(!el){base();return}
-  if(reduced()){drop();base();return}
-  el.addEventListener('animationend',e=>{if(e.target===el)drop()});
-  el.addEventListener('click',()=>{drop();base()});
-  setTimeout(drop,3800);setTimeout(base,5000);
+  if(!el||reduced()){if(el)el.remove();root.classList.remove('has-intro','anime-pending');return}
+  const bar=$('.in-bar i',el),pct=$('.in-pct',el),label=$('.in-state',el),st={v:0},lift={v:0};
+  let over=false;
+  const done=()=>{if(over)return;over=true;el.remove();root.classList.remove('has-intro','anime-pending')};
+  const paint=()=>{const v=Math.max(0,Math.min(100,st.v));bar.style.transform='scaleX('+(v/100)+')';pct.textContent=Math.round(v)+'%'};
+  el.addEventListener('click',done);
+  setTimeout(done,9000);
+  whenAnime(async A=>{
+    if(over)return;
+    const t0=performance.now();
+    let fo=false,pg=false;
+    const tgt=()=>30+(fo?40:0)+(pg?30:0);
+    const tweenTo=(v,ms)=>new Promise(res=>{
+      const end=()=>{st.v=v;paint();res()};
+      if(!A){bar.style.transition='transform .5s cubic-bezier(.22,1,.36,1)';return end()}
+      try{A.animate(st,{v,duration:ms,ease:'outQuad',onUpdate:paint,onComplete:end})}catch(e){end()}
+    });
+    const chase=()=>tweenTo(tgt(),tgt()>=100?500:650);
+    try{
+      if(A){
+        const {createTimeline,stagger}=A;
+        const tl=createTimeline({defaults:{ease:'outExpo'}});
+        tl.add('.in-shape',{opacity:[0,1],scale:[.3,1],duration:800,delay:stagger(110)},0)
+          .add('.in-s2',{rotate:[18,18],duration:800},0)
+          .add('.in-receipt',{opacity:[0,1],translateY:['-125%','0%'],duration:850},80)
+          .add('.in-logo>span',{opacity:[0,1],translateY:['100%','0%'],duration:700,delay:stagger(55)},520)
+          .add('.in-rule',{opacity:[0,1],scaleX:[0,1],duration:600},1050)
+          .add('.in-load',{opacity:[0,1],translateY:['40%','0%'],duration:600},1150);
+      }else root.classList.remove('anime-pending');
+    }catch(e){A=null;root.classList.remove('anime-pending')}
+    const fonts=Promise.race([
+      Promise.all(['800 1em "Bricolage Grotesque"','700 1em "Anek Malayalam"'].map(f=>document.fonts?document.fonts.load(f,'Chumiരസീത്'):0)),
+      wait(3000)
+    ]).catch(()=>{});
+    const page=new Promise(r=>document.readyState==='complete'?r():window.addEventListener('load',()=>r(),{once:true}));
+    fonts.then(()=>{fo=true;chase()});
+    page.then(()=>{pg=true;chase()});
+    chase();
+    await Promise.all([fonts,page,wait(Math.max(0,(A?1700:700)-(performance.now()-t0)))]);
+    if(over)return;
+    if(Math.round(st.v)<100)await chase();
+    if(over)return;
+    label.textContent='Ready';
+    try{
+      if(!A)throw 0;
+      const tl=A.createTimeline({defaults:{ease:'inCubic'}});
+      tl.add('.in-receipt',{translateY:['0%','140%'],rotate:[0,4],duration:600},0)
+        .add(lift,{v:100,duration:760,ease:'inOutExpo',onUpdate:()=>{el.style.clipPath='inset(0 0 '+lift.v+'% 0)'}},320)
+        .call(()=>root.classList.remove('has-intro'),460)
+        .call(done,1150);
+    }catch(e){
+      el.classList.add('leave');root.classList.remove('has-intro');
+      await wait(520);done();
+    }
+  });
 }
 
 /* ---------- editor: render ---------- */

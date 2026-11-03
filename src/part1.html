@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chumi.രസീത്</title>
-<script>(function(){var d=document.documentElement;d.classList.add("js");try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches)d.classList.add("has-intro")}catch(e){}})()</script>
+<script>(function(){var d=document.documentElement;d.classList.add("js");try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches){d.classList.add("has-intro","anime-pending");var a=document.createElement("script");a.id="animejs";a.async=true;a.src="https://cdn.jsdelivr.net/npm/animejs@4/dist/bundles/anime.umd.min.js";a.onload=function(){window.__animeOk=1};a.onerror=function(){window.__animeFail=1};document.head.appendChild(a)}}catch(e){}})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;700&family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Lato:wght@400;700;900&family=Montserrat:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,400..700&family=Poppins:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&family=Anek+Malayalam:wght@500;700;800&display=swap" rel="stylesheet">
@@ -354,36 +354,31 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 .js [data-reveal="stagger"].in>*{animation:revealUp .65s var(--ease) backwards;animation-delay:calc(var(--i,0)*70ms)}
 
 /* load intro: a violet curtain with the wordmark, then it lifts */
-#intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;overflow:hidden;background:var(--intro-bg);color:var(--intro-fg);clip-path:inset(0);animation:introOut .7s var(--ease) 2s both;cursor:pointer}
-@keyframes introOut{to{clip-path:inset(0 0 100% 0);visibility:hidden}}
-/* the name is printed on a receipt that feeds in from the top, then tears away as the curtain lifts */
-.in-receipt{position:relative;z-index:1;width:min(640px,88vw);filter:drop-shadow(0 18px 20px rgba(20,8,70,.38));animation:inPrint 2.3s both}
-@keyframes inPrint{
-  0%{transform:translateY(-125%);animation-timing-function:var(--ease)}
-  28%{transform:translateY(0)}
-  80%{transform:translateY(0);animation-timing-function:var(--ease)}
-  100%{transform:translateY(135%) rotate(4deg)}
-}
+#intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;overflow:hidden;background:var(--intro-bg);color:var(--intro-fg);clip-path:inset(0);cursor:pointer;animation:introFailsafe 0s linear 12s forwards}
+@keyframes introFailsafe{to{visibility:hidden;pointer-events:none}}
+#intro.leave{opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility 0s linear .45s}
+/* a receipt prints the name while the page loads (animated with anime.js; plain fade if it cannot load) */
+html.anime-pending .in-shape,html.anime-pending .in-receipt,html.anime-pending .in-logo>span,html.anime-pending .in-rule,html.anime-pending .in-load{opacity:0}
+.in-receipt{position:relative;z-index:1;width:min(640px,88vw);filter:drop-shadow(0 18px 20px rgba(20,8,70,.38))}
 .in-paper{--s:24px;display:grid;justify-items:center;gap:18px;padding:44px 28px 64px;background:#fff;color:#1B1244;
   -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/var(--s) 100%;
   mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/var(--s) 100%}
 .in-logo{display:flex;align-items:baseline;justify-content:center;font:800 clamp(40px,10.5vw,92px)/1.1 var(--font-display);letter-spacing:-.04em;color:#1B1244}
-.in-logo>span{display:inline-block;animation:inLetter .7s var(--ease) both;animation-delay:calc(.55s + var(--i)*50ms)}
+.in-logo>span{display:inline-block}
 .in-logo>span:not(.ml){overflow:hidden;padding:.06em .01em .12em;margin-bottom:-.12em}
-.in-logo .ml{animation-name:inLetterMl}
 .in-logo .dot{color:#E8472B}
-@keyframes inLetter{from{transform:translateY(105%)}}
-@keyframes inLetterMl{from{opacity:0;transform:translateY(.45em)}}
-.in-rule{width:100%;border-top:3px dashed rgba(27,18,68,.32);transform-origin:0 0;animation:inLine .7s var(--ease) 1.2s both}
-@keyframes inLine{from{transform:scaleX(0)}}
-.in-cap{margin:0;font:600 12px/1 var(--font-mono);letter-spacing:.18em;text-transform:uppercase;color:#463E6B;animation:inCap .6s var(--ease) 1.3s both}
-@keyframes inCap{from{opacity:0;transform:translateY(8px)}}
-.in-shape{position:absolute;display:block;animation:shapeIn .9s var(--ease) both}
-.in-s1{width:34vmin;height:34vmin;border-radius:50%;background:var(--pop);right:-8vmin;bottom:-10vmin;animation-delay:.2s}
-.in-s2{width:20vmin;height:20vmin;border-radius:14px;background:var(--stamp);left:-5vmin;top:-5vmin;transform:rotate(18deg);animation-name:shapeIn2;animation-delay:.35s}
-.in-s3{width:7vmin;height:7vmin;border-radius:50%;background:var(--mint);left:14vmin;bottom:16vmin;animation-delay:.5s}
-@keyframes shapeIn2{from{opacity:0;transform:rotate(18deg) scale(.3)}}
-html.has-intro{--base:2.05s}
+.in-rule{width:100%;border-top:3px dashed rgba(27,18,68,.32);transform-origin:0 0}
+.in-load{width:100%;display:grid;gap:10px}
+.in-bar{height:12px;border:2px solid #1B1244;border-radius:999px;overflow:hidden;background:#fff}
+.in-bar i{display:block;height:100%;background:#5B3DF5;transform-origin:0 0;transform:scaleX(0)}
+.in-row{margin:0;display:flex;justify-content:space-between;font:600 12px/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:#463E6B}
+.in-pct{font-variant-numeric:tabular-nums}
+.in-shape{position:absolute;display:block}
+.in-s1{width:34vmin;height:34vmin;border-radius:50%;background:var(--pop);right:-8vmin;bottom:-10vmin}
+.in-s2{width:20vmin;height:20vmin;border-radius:14px;background:var(--stamp);left:-5vmin;top:-5vmin;transform:rotate(18deg)}
+.in-s3{width:7vmin;height:7vmin;border-radius:50%;background:var(--mint);left:14vmin;bottom:16vmin}
+/* the landing animation waits for the loader to lift */
+html.has-intro .hero *,html.has-intro .hero *::before,html.has-intro .hero *::after{animation-play-state:paused!important}
 
 /* route changes: View Transitions where supported, a fade-up otherwise */
 .top{view-transition-name:top}
