@@ -10,6 +10,7 @@
 <symbol id="i-img" viewBox="0 0 24 24"><path d="M4 5h16v14H4zM4 16l5-5 4 4 3-3 4 4M9 9h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 8v5M12 17h.01M10.3 4L2.8 17.5A2 2 0 004.5 20.5h15a2 2 0 001.7-3L13.7 4a2 2 0 00-3.4 0z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-move" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M12 3l-3 3M12 3l3 3M12 21l-3-3M12 21l3-3M3 12l3-3M3 12l3 3M21 12l-3-3M21 12l-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 <symbol id="i-new" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8zM14 3v5h5M12 12v6M9 15h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M3 7h3.5c1.6 0 3 .8 3.9 2.1l3.2 4.8c.9 1.3 2.3 2.1 3.9 2.1H21M3 17h3.5c1.6 0 3-.8 3.9-2.1M13.6 9.1c.9-1.3 2.3-2.1 3.9-2.1H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </defs></svg>
@@ -203,6 +204,20 @@
               <div class="f"><label for="b-stamp">Status stamp</label><select id="b-stamp" data-bind="inv.stamp"><option value="none">No stamp</option><option value="paid">Paid</option><option value="overdue">Overdue</option><option value="draft">Draft</option></select></div>
             </div>
           </div>
+          <div class="card"><h3>Signature<small>Optional</small></h3>
+            <div class="stack">
+              <label class="check"><input id="b-sign" type="checkbox" data-bind="inv.sign">Add an authorised signature line</label>
+              <div class="stack" id="signOpts" hidden>
+                <div class="f"><label for="b-signlabel">Text under the line</label><input id="b-signlabel" type="text" maxlength="40" data-bind="inv.signLabel" autocomplete="off"></div>
+                <div class="logoline">
+                  <span class="btn btn-quiet btn-sm filebtn"><svg class="ic"><use href="#i-img"/></svg>Upload signature<input id="signFile" type="file" accept="image/*" aria-label="Upload signature image"></span>
+                  <img id="signPrev" alt="Your signature" hidden>
+                  <button class="btn btn-quiet btn-sm" id="signRemove" type="button" hidden>Remove signature</button>
+                </div>
+                <p class="note">Sign on white paper and take a photo. The white background is removed for you.</p>
+              </div>
+            </div>
+          </div>
           <div class="nextrow"><button class="btn btn-quiet" type="button" data-goto="details"><span class="arr back" aria-hidden="true">←</span> Details</button><button class="btn btn-primary" type="button" data-goto="send">Next: send it <span class="arr" aria-hidden="true">→</span></button></div>
         </section>
 
@@ -228,6 +243,11 @@
 
       <aside class="ed-pre" aria-label="Invoice preview">
         <div class="pre-head"><span>Live preview</span><span id="pageCount">A4 · 1 page</span></div>
+        <div class="pre-tools">
+          <button class="btn btn-quiet btn-sm" id="btnMove" type="button" aria-pressed="false"><svg class="ic"><use href="#i-move"/></svg><span>Move text</span></button>
+          <button class="btn btn-quiet btn-sm" id="btnMoveReset" type="button" hidden>Reset positions</button>
+        </div>
+        <p class="move-hint" id="moveHint" hidden>Drag any block to place it. Pink lines show when it lines up. Arrow keys nudge the selected block.</p>
         <div class="desk"><div class="sheet-host" id="prevHost"><div class="scaler"></div></div></div>
       </aside>
     </div>

@@ -12,7 +12,7 @@
 .p-brand{grid-area:brand}.p-title{grid-area:title}.p-dates{grid-area:dates}.p-bill{grid-area:bill}.p-from{grid-area:from}
 .p-ref{grid-area:ref;display:none}.p-due{grid-area:due;display:none}
 .p-items{grid-area:items}.p-pay{grid-area:pay}.p-note{grid-area:note}.p-totals{grid-area:totals;align-self:start}
-.p-sign{grid-area:sign;display:none}.p-contact{grid-area:contact}.p-foot{grid-area:foot;align-self:end}
+.p-sign{grid-area:sign;display:block}.p-contact{grid-area:contact}.p-foot{grid-area:foot;align-self:end}
 .p-brand{display:flex;align-items:center;gap:12px;align-self:start}
 .p-logo{max-height:56px;max-width:150px;object-fit:contain;display:block}
 .p-bizname{font:700 18px/1.2 var(--ph);color:var(--ink)}
@@ -46,6 +46,8 @@
 .p-sign{text-align:center;padding-top:44px}
 .sg-line{border-top:1px solid var(--ink);margin-bottom:6px}
 .sg-txt{font-size:11px;color:var(--mut)}
+.sg-img{display:block;width:100%;height:56px;object-fit:contain;object-position:center bottom;margin:0 0 4px}
+.p-sign.has-img{padding-top:0!important}
 .p-contact .ct{display:flex;align-items:flex-start;gap:8px;margin:0 0 6px}
 .p-contact .ct i{flex:none;width:20px;height:20px;border-radius:5px;background:var(--b);display:grid;place-items:center}
 .p-contact .ct i svg{width:12px;height:12px;display:block}
@@ -63,13 +65,13 @@
 /* ===== 1 · Navy Project ===== */
 [data-tpl="navy"]{--pb:'Montserrat','Segoe UI',system-ui,sans-serif;--ph:var(--pb);--ink:var(--a);--mut:var(--a);font-size:11px;font-weight:500}
 [data-tpl="navy"] .p-page{padding:46px 46px 34px;column-gap:16px;grid-template-columns:repeat(6,minmax(0,1fr));
-  grid-template-areas:"brand brand brand title title title" "brand brand brand dates dates dates" "ref ref bill bill from from" "items items items items items items" "due due due totals totals totals" "pay pay note note contact contact" ". . . . . ." "foot foot foot foot foot foot";
+  grid-template-areas:"brand brand brand title title title" "brand brand brand dates dates dates" "ref ref bill bill from from" "items items items items items items" "due due due totals totals totals" "pay pay note note contact contact" ". . . . sign sign" "foot foot foot foot foot foot";
   grid-template-rows:42px 24px 150px auto auto auto 1fr auto}
 [data-tpl="navy"] .p-title{text-align:right}
 [data-tpl="navy"] .p-title h1{font-size:40px;font-weight:800;letter-spacing:.01em;line-height:42px}
 [data-tpl="navy"] .p-title .p-num{display:none}
-[data-tpl="navy"] .p-dates{display:flex;justify-content:flex-end;gap:16px;font-size:10px;font-weight:700;text-transform:uppercase}
-[data-tpl="navy"] .p-dates div{gap:6px;padding:0}
+[data-tpl="navy"] .p-dates{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:2px 16px;font-size:10px;font-weight:700;text-transform:uppercase}
+[data-tpl="navy"] .p-dates div{gap:6px;padding:0;white-space:nowrap}
 [data-tpl="navy"] .p-dates dt{color:var(--a)}
 [data-tpl="navy"] .p-dates .d-no{display:flex}
 [data-tpl="navy"] .p-ref{display:block;align-self:start;padding-top:34px}
@@ -141,14 +143,14 @@
 [data-tpl="fluid"]{--ph:'Poppins','Segoe UI',system-ui,sans-serif;--pb:'Poppins','Segoe UI',system-ui,sans-serif;--ink:#4b4f5c;--mut:#6a6e7a;font-size:11px;font-weight:400}
 [data-tpl="fluid"] .p-page{padding:46px 44px 40px;
   grid-template-areas:"brand brand . ." "from from . ." ". bill dates dates" "items items items items" ". . totals totals" ". . . ." "pay pay sign sign" "note note sign sign" "contact contact foot foot";
-  grid-template-rows:auto auto auto auto auto 1fr auto auto auto}
+  grid-template-rows:auto minmax(132px,auto) auto auto auto 1fr minmax(70px,auto) minmax(70px,auto) auto}
 [data-tpl="fluid"] .p-title{display:none}
 [data-tpl="fluid"] .p-bizname{color:#fff;font-size:20px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
 [data-tpl="fluid"] .p-from{color:#fff;padding-top:10px}
 [data-tpl="fluid"] .p-from .p-label,[data-tpl="fluid"] .p-from .p-client{display:none}
 [data-tpl="fluid"] .p-from .p-small{color:#fff;margin:0;font-weight:500}
-[data-tpl="fluid"] .p-bill{padding-top:104px}
-[data-tpl="fluid"] .p-dates{padding-top:104px}
+[data-tpl="fluid"] .p-bill{padding-top:48px}
+[data-tpl="fluid"] .p-dates{padding-top:48px}
 [data-tpl="fluid"] .p-bill .p-label,[data-tpl="fluid"] .p-bill .p-small{color:var(--mut);font-weight:400;letter-spacing:0;text-transform:none;font-size:11px}
 [data-tpl="fluid"] .p-client{font-size:12px;font-weight:700;color:var(--ink)}
 [data-tpl="fluid"] .p-dates div{display:grid;grid-template-columns:1fr 1fr;gap:0 10px;padding:0}
@@ -175,9 +177,10 @@
 [data-tpl="fluid"] .p-pay .p-label,[data-tpl="fluid"] .p-note .p-label,[data-tpl="fluid"] .p-contact .p-label{color:#fff;font-weight:700;font-size:10.5px;letter-spacing:.06em}
 [data-tpl="fluid"] .p-pay .p-txt,[data-tpl="fluid"] .p-note .p-txt,[data-tpl="fluid"] .p-contact .ct span{color:#fff;font-size:10px}
 [data-tpl="fluid"] .p-contact .ct i{background:rgba(255,255,255,.22)}
-[data-tpl="fluid"] .p-sign{display:block;align-self:end;padding-top:20px}
-[data-tpl="fluid"] .p-foot{color:#fff;font-weight:500;align-self:end;text-align:right}
+[data-tpl="fluid"] .p-sign{display:block;align-self:start;justify-self:end;width:200px;padding-top:30px}
+[data-tpl="fluid"] .p-foot{color:#fff;font-weight:500;align-self:end;justify-self:end;text-align:right;max-width:260px;line-height:1.35;margin-bottom:-24px}
 [data-tpl="fluid"] .p-note,[data-tpl="fluid"] .p-contact{padding-top:12px}
+[data-tpl="fluid"] .p-pay,[data-tpl="fluid"] .p-note,[data-tpl="fluid"] .p-contact{max-width:226px}
 
 /* ===== 4 · Sky Grid ===== */
 [data-tpl="sky"]{--ph:'Poppins','Segoe UI',system-ui,sans-serif;--pb:'Poppins','Segoe UI',system-ui,sans-serif;--ink:#101216;--mut:#2c2f36;--ln:#2b2d31;font-size:11.5px}
@@ -265,7 +268,7 @@
 /* ===== 6 · Red Slash ===== */
 [data-tpl="redslash"]{--ph:'Lato','Segoe UI',system-ui,sans-serif;--pb:'Lato','Segoe UI',system-ui,sans-serif;--ink:#1c212b;--mut:#4a515c;--ln:#cdd1d6;font-size:11.5px}
 [data-tpl="redslash"] .p-page{padding:0 52px 0;
-  grid-template-areas:"brand title title title" "brand dates dates dates" "bill bill pay pay" "items items items items" "due due totals totals" "note note note note" ". . . ." "foot foot foot foot" "contact contact sign sign";
+  grid-template-areas:"brand title title title" "brand dates dates dates" "bill bill pay pay" "items items items items" "due due totals totals" "note note note note" ". . sign sign" "foot foot foot foot" "contact contact . .";
   grid-template-rows:84px 52px auto auto auto auto 1fr auto 74px}
 [data-tpl="redslash"] .p-brand{margin-left:-0px;padding-top:36px;align-self:start}
 [data-tpl="redslash"] .p-bizname{color:#fff;font-size:17px;letter-spacing:.03em;text-transform:uppercase}
@@ -276,7 +279,7 @@
 [data-tpl="redslash"] .p-dates div{padding:0;gap:6px}
 [data-tpl="redslash"] .p-dates dt,[data-tpl="redslash"] .p-dates dd{color:#fff}
 [data-tpl="redslash"] .p-dates .d-no{display:flex}
-[data-tpl="redslash"] .p-bill{padding-top:30px}[data-tpl="redslash"] .p-pay{padding-top:30px}
+[data-tpl="redslash"] .p-bill{padding-top:42px}[data-tpl="redslash"] .p-pay{padding-top:42px}
 [data-tpl="redslash"] .p-bill .p-label,[data-tpl="redslash"] .p-pay .p-label{color:var(--a);font-weight:700;letter-spacing:.02em}
 [data-tpl="redslash"] .p-bill .p-client{font-size:20px;font-weight:700}
 [data-tpl="redslash"] .p-pay{text-align:left;padding-left:14px}
@@ -301,14 +304,14 @@
 [data-tpl="redslash"] .p-contact .p-label{display:none}
 [data-tpl="redslash"] .p-contact .ct{margin:0;font-size:10px;color:#fff;gap:6px}
 [data-tpl="redslash"] .p-contact .ct i{background:var(--a);border-radius:50%}
-[data-tpl="redslash"] .p-sign{display:block;padding:0 0 12px;align-self:end;margin-left:20px}
+[data-tpl="redslash"] .p-sign{display:block;padding:0 0 12px;align-self:end;justify-self:end;width:200px}
 [data-tpl="redslash"] .p-sign .sg-txt{font-weight:700;color:var(--ink)}
 [data-tpl="redslash"] .p-foot{color:var(--mut);font-size:10px;padding:8px 0 14px;text-align:center}
 
 /* ===== 7 · Cream Studio ===== */
 [data-tpl="cream"]{--ph:'DM Sans','Segoe UI',system-ui,sans-serif;--pb:'DM Sans','Segoe UI',system-ui,sans-serif;--ink:#3b3128;--mut:#8a7f72;--ln:#d9d1c3;font-size:11px}
 [data-tpl="cream"] .p-page{padding:70px 56px 44px;grid-template-columns:repeat(4,minmax(0,1fr));
-  grid-template-areas:"title title title title" "bill bill dates dates" "items items items items" "pay pay totals totals" "note note totals totals" "brand brand from from" ". . . ." "foot foot foot foot"}
+  grid-template-areas:"title title title title" "bill bill dates dates" "items items items items" "pay pay totals totals" "note note totals totals" "brand brand from from" ". . sign sign" "foot foot foot foot"}
 [data-tpl="cream"] .p-title h1{font:700 62px/1 var(--ph);letter-spacing:.01em;color:var(--a)}
 [data-tpl="cream"] .p-title .p-num{display:none}
 [data-tpl="cream"] .p-bill{padding-top:50px}
@@ -346,7 +349,7 @@
 /* ===== 8 · Atelier ===== */
 [data-tpl="atelier"]{--ph:'Bodoni Moda','Didot',Georgia,serif;--pb:'Inter','Segoe UI',system-ui,sans-serif;--ink:#111;--mut:#333;--ln:#111;font-size:11.5px}
 [data-tpl="atelier"] .p-page{padding:62px 62px 50px;
-  grid-template-areas:"brand brand title title" ". . . ." "bill bill dates dates" "items items items items" ". . totals totals" "note note . ." "pay pay from from" ". . . ." "foot foot foot foot";
+  grid-template-areas:"brand brand title title" ". . . ." "bill bill dates dates" "items items items items" ". . totals totals" "note note . ." "pay pay from from" ". . sign sign" "foot foot foot foot";
   grid-template-rows:auto 56px auto auto auto auto auto 1fr auto}
 [data-tpl="atelier"] .p-bizname{font:400 46px/1 var(--ph)}
 [data-tpl="atelier"] .p-title{text-align:right}
@@ -381,7 +384,7 @@
 /* ===== 9 · Plain Ink ===== */
 [data-tpl="plain"]{--ph:'Inter','Segoe UI',system-ui,sans-serif;--pb:'Inter','Segoe UI',system-ui,sans-serif;--ink:#111;--mut:#333;--ln:#a9a9a9;font-size:11.5px}
 [data-tpl="plain"] .p-page{padding:70px 56px 48px;column-gap:44px;grid-template-columns:repeat(2,minmax(0,1fr));
-  grid-template-areas:"title dates" "brand brand" "bill from" "items items" "pay totals" "note note" ". ." "foot foot";
+  grid-template-areas:"title dates" "brand brand" "bill from" "items items" "pay totals" "note note" ". sign" "foot foot";
   grid-template-rows:auto auto auto auto auto auto 1fr auto}
 [data-tpl="plain"] .p-title h1{font:400 66px/1 var(--ph);letter-spacing:-.01em;color:var(--ink)}
 [data-tpl="plain"] .p-title .p-num{display:none}
@@ -456,10 +459,10 @@
 /* ===== 11 · Wave Quote ===== */
 [data-tpl="wave"]{--ph:'Montserrat','Segoe UI',system-ui,sans-serif;--pb:'Montserrat','Segoe UI',system-ui,sans-serif;--ink:var(--a);--mut:#6b5fa8;--ln:#cfc8ea;font-size:10px}
 [data-tpl="wave"] .p-page{padding:70px 40px 34px;column-gap:16px;
-  grid-template-areas:"brand . . ." "title title title title" "bill bill dates num" "items items items items" ". . totals totals" "pay pay pay pay" "note note note note" "contact contact contact contact" ". . . ." "foot foot foot foot";
+  grid-template-areas:"brand . . ." "title title title title" "bill bill dates num" "items items items items" ". . totals totals" "pay pay pay pay" "note note note note" "contact contact contact contact" ". . sign sign" "foot foot foot foot";
   grid-template-rows:auto auto auto auto auto auto auto auto 1fr auto}
-[data-tpl="wave"] .p-brand{padding-top:0;margin-bottom:76px}
-[data-tpl="wave"] .p-bizname{color:#fff;font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+[data-tpl="wave"] .p-brand{padding-top:0;margin-top:-24px;margin-bottom:100px;grid-column:1/4}
+[data-tpl="wave"] .p-bizname{color:#fff;font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;line-height:1.25;max-height:36px;overflow:hidden}
 [data-tpl="wave"] .p-title{display:flex;align-items:center;gap:18px}
 [data-tpl="wave"] .p-title h1{font-size:34px;font-weight:800;letter-spacing:.01em;white-space:nowrap}
 [data-tpl="wave"] .p-title::after{content:"";flex:1;height:2px;background:var(--a);margin-top:6px}
@@ -497,7 +500,7 @@
 /* ===== 12 · Dark Panel ===== */
 [data-tpl="dark"]{--ph:'Poppins','Segoe UI',system-ui,sans-serif;--pb:'Poppins','Segoe UI',system-ui,sans-serif;--ink:#202020;--mut:#6a6a6a;--ln:#e4e4e4;font-size:11px}
 [data-tpl="dark"] .p-page{padding:44px 38px 34px;column-gap:26px;grid-template-columns:250px minmax(0,1fr);
-  grid-template-areas:"dates brand" "dates title" "bill ref" "bill pay" "items items" "totals totals" "note contact" ". ." "foot foot";
+  grid-template-areas:"dates brand" "dates title" "bill ref" "bill pay" "items items" "totals totals" "note contact" ". sign" "foot foot";
   grid-template-rows:auto auto auto auto auto auto auto 1fr auto}
 [data-tpl="dark"] .p-dates{background:var(--a);color:#fff;padding:34px 26px 0;font-size:12px}
 [data-tpl="dark"] .p-dates div{display:block;padding:0 0 12px}
@@ -537,7 +540,7 @@
 /* ===== 13 · Wave Foot ===== */
 [data-tpl="foot"]{--ph:'Montserrat','Segoe UI',system-ui,sans-serif;--pb:'Montserrat','Segoe UI',system-ui,sans-serif;--ink:#181818;--mut:#3a3a3a;--ln:#d9d9db;font-size:11.5px}
 [data-tpl="foot"] .p-page{padding:54px 52px 50px;
-  grid-template-areas:"brand brand brand num" "title title title title" "dates dates . ." "bill bill from from" "items items items items" "pay pay totals totals" "note note . ." ". . . ." "foot foot foot foot";
+  grid-template-areas:"brand brand brand num" "title title title title" "dates dates . ." "bill bill from from" "items items items items" "pay pay totals totals" "note note . ." ". . sign sign" "foot foot foot foot";
   grid-template-rows:auto auto auto auto auto auto auto 1fr auto}
 [data-tpl="foot"] .p-bizname{font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.03em}
 [data-tpl="foot"] .p-title h1{font-size:76px;font-weight:800;letter-spacing:-.01em;color:var(--ink);padding-top:28px}
@@ -565,7 +568,7 @@
 [data-tpl="foot"] .p-totals .r{font-size:12px;padding:3px 12px}
 [data-tpl="foot"] .p-totals .r span:first-child{color:var(--ink)}
 [data-tpl="foot"] .p-totals .r.p-grand{border-top:0;font-size:12.5px;margin-top:0;padding-top:3px;padding-bottom:10px;border-bottom:1px solid #d8d8da}
-[data-tpl="foot"] .p-foot{padding-bottom:110px;color:var(--mut)}
+[data-tpl="foot"] .p-foot{padding-bottom:212px;color:var(--mut)}
 
 /* ===== 14 · Ledger ===== */
 [data-tpl="ledger"]{--ph:'Lato','Segoe UI',system-ui,sans-serif;--pb:'Lato','Segoe UI',system-ui,sans-serif;--ink:#111;--mut:#444;--ln:#c9c9c9;font-size:11px}
@@ -608,7 +611,7 @@
 /* ===== 15 · Lotus ===== */
 [data-tpl="lotus"]{--ph:'Cormorant Garamond',Georgia,'Times New Roman',serif;--pb:'Inter','Segoe UI',system-ui,sans-serif;--ink:#141414;--mut:#333;--ln:#1a1a1a;font-size:11px}
 [data-tpl="lotus"] .p-page{padding:58px 56px 44px;
-  grid-template-areas:"brand brand title title" ". . . ." "bill bill dates dates" "items items items items" ". . totals totals" "note note . ." ". . . ." "pay pay from from" "foot foot foot foot";
+  grid-template-areas:"brand brand title title" ". . . ." "bill bill dates dates" "items items items items" ". . totals totals" "note note . ." ". . sign sign" "pay pay from from" "foot foot foot foot";
   grid-template-rows:auto 40px auto auto auto auto 1fr auto auto}
 [data-tpl="lotus"] .p-bizname{font:600 26px/1.1 var(--ph);color:var(--a);letter-spacing:.02em}
 [data-tpl="lotus"] .p-title{text-align:right}
@@ -666,7 +669,7 @@
 [data-tpl="green"] .p-items td.c-d{text-align:left;padding-left:14px;font-weight:700}
 [data-tpl="green"] .p-pay{padding-top:24px}
 [data-tpl="green"] .p-pay .p-txt{font-size:9.5px;font-weight:700}
-[data-tpl="green"] .p-sign{display:block;padding-top:44px;align-self:end}
+[data-tpl="green"] .p-sign{display:block;padding:44px 0 6px;align-self:end}
 [data-tpl="green"] .p-sign .sg-txt{font-weight:700;color:var(--ink)}
 [data-tpl="green"] .p-totals{padding-top:22px}
 [data-tpl="green"] .p-totals .r{font-size:9.5px;font-weight:700;padding:3px 0}
@@ -765,7 +768,7 @@
 /* ===== 19 · Green Leaf ===== */
 [data-tpl="leaf"]{--ph:'Montserrat','Segoe UI',system-ui,sans-serif;--pb:'Montserrat','Segoe UI',system-ui,sans-serif;--ink:#3d4440;--mut:#5d6560;--ln:#e5ece6;font-size:10px}
 [data-tpl="leaf"] .p-page{padding:68px 54px 44px;column-gap:18px;
-  grid-template-areas:"brand title title title" "bill bill dates dates" "items items items items" "contact . totals totals" "pay pay totals totals" "note note note note" ". . . ." "foot foot foot foot";
+  grid-template-areas:"brand title title title" "bill bill dates dates" "items items items items" "contact . totals totals" "pay pay totals totals" "note note note note" ". . sign sign" "foot foot foot foot";
   grid-template-rows:auto auto auto auto auto auto 1fr auto}
 [data-tpl="leaf"] .p-bizname{font-size:16px;font-weight:700;color:var(--ink)}
 [data-tpl="leaf"] .p-title{text-align:right}
@@ -799,6 +802,20 @@
 [data-tpl="leaf"] .p-note{padding-top:14px;grid-column:3/5;text-align:right;grid-row:6}
 [data-tpl="leaf"] .p-foot{padding-bottom:10px;grid-column:3/5;text-align:right}
 
+/* ---------- signature spot for the templates that had none ---------- */
+[data-tpl="navy"] .p-sign,[data-tpl="cream"] .p-sign,[data-tpl="atelier"] .p-sign,[data-tpl="plain"] .p-sign,[data-tpl="wave"] .p-sign,[data-tpl="dark"] .p-sign,[data-tpl="foot"] .p-sign,[data-tpl="lotus"] .p-sign,[data-tpl="leaf"] .p-sign{align-self:end;justify-self:end;width:200px;padding:0 0 10px}
+[data-tpl="navy"] .sg-line{border-top-color:var(--a)}
+[data-tpl="navy"] .sg-txt,[data-tpl="leaf"] .sg-txt,[data-tpl="wave"] .sg-txt{color:var(--a);font-weight:700}
+
 /* elements a template does not place in its grid are hidden, so they never create an extra column */
 [data-tpl="sky"] .p-from,[data-tpl="charcoal"] .p-from,[data-tpl="redslash"] .p-from,[data-tpl="geo"] .p-from,[data-tpl="wave"] .p-from,[data-tpl="dark"] .p-from,[data-tpl="ledger"] .p-from,[data-tpl="band"] .p-from,[data-tpl="yellow"] .p-from,[data-tpl="leaf"] .p-from{display:none}
 [data-tpl="cream"] .p-contact,[data-tpl="atelier"] .p-contact,[data-tpl="plain"] .p-contact,[data-tpl="foot"] .p-contact,[data-tpl="lotus"] .p-contact{display:none}
+
+/* ---------- move-text mode: on screen only, never in the export ---------- */
+.paper.moving [data-b]{outline:1.5px dashed rgba(91,61,245,.6);outline-offset:3px;cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none}
+.paper.moving [data-b].sel{outline:2px solid #5B3DF5}
+.paper.moving .p-stamp{pointer-events:auto}
+.paper.moving [data-b].drag{cursor:grabbing;outline-color:#FF2D95}
+.p-guide{position:absolute;z-index:9;background:#FF2D95;pointer-events:none}
+.p-guide.gx{top:0;bottom:0;width:2px;margin-left:-1px}
+.p-guide.gy{left:0;right:0;height:2px;margin-top:-1px}

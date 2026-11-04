@@ -70,8 +70,9 @@ function sampleState(){
     notes:'Thank you for your business!',
     payment:'Bank transfer to Example Bank\nAccount name: Northstar Studio\nAccount no. 0000 0000. Please quote the invoice number.',
     footer:'Questions about this invoice? Reply to the email it came with.',
-    layout:DEFAULT_TPL,accent:''};
+    layout:DEFAULT_TPL,accent:'',sign:false,signLabel:'Authorised signature',signImg:'',pos:{}};
 }
+const clonePos=p=>JSON.parse(JSON.stringify(p||{}));
 function blankInvoice(keep){
   const t=today(),o=keep||sampleState();
   return{sample:false,title:o.title||'Invoice',number:keep?bump(keep.number):'INV-001',issue:t,terms:o.terms||'14',due:addDays(t,o.terms==='custom'?14:(+o.terms||0)),po:'',stamp:'none',
@@ -79,7 +80,8 @@ function blankInvoice(keep){
     to:{name:'',company:'',email:'',address:'',taxId:''},
     logo:keep?keep.logo:'',currency:o.currency,items:[item('',1,'')],
     discount:{type:'percent',value:''},tax:keep?{...keep.tax,fixed:'',fixedFor:''}:{label:'Tax',rate:'',inclusive:false},adjustment:'',paid:'',whole:keep?!!keep.whole:false,
-    notes:keep?keep.notes:'',payment:keep?keep.payment:'',footer:keep?keep.footer:'',layout:o.layout,accent:o.accent};
+    notes:keep?keep.notes:'',payment:keep?keep.payment:'',footer:keep?keep.footer:'',layout:o.layout,accent:o.accent,
+    sign:!!o.sign,signLabel:typeof o.signLabel==='string'?o.signLabel:'Authorised signature',signImg:keep?(keep.signImg||''):'',pos:keep?clonePos(keep.pos):{}};
 }
 const defaultTool=()=>({total:'25000',n:'5',cat:'it',grp:'all',gst:'18',cur:'INR',seed:'1'});
 const isObj=v=>v&&typeof v==='object'&&!Array.isArray(v);
@@ -97,11 +99,42 @@ function load(){
   if(!/^#[0-9a-f]{6}$/i.test(app.inv.accent||''))app.inv.accent='';
   if(!/^\d{1,12}$/.test(String(app.xt.total).replace(/,/g,'')))app.xt.total=defaultTool().total;
   app.inv.items.forEach(i=>{if(!i.id)i.id=uid()});
+  const iv=app.inv;
+  iv.sign=!!iv.sign;
+  if(typeof iv.signLabel!=='string')iv.signLabel='Authorised signature';
+  iv.signLabel=iv.signLabel.slice(0,40);
+  if(typeof iv.signImg!=='string'||!/^data:image\/(png|jpeg|webp|gif);base64,/.test(iv.signImg))iv.signImg='';
+  iv.pos=cleanPos(iv.pos);
 }
 function getPath(o,p){return p.split('.').reduce((a,k)=>a==null?a:a[k],o)}
 function setPath(o,p,v){const k=p.split('.');let t=o;for(let i=0;i<k.length-1;i++)t=t[k[i]];t[k[k.length-1]]=v}
 
 //__TPL__
+
+/* ---------- block positions (drag to move) ---------- */
+const BLOCKS=['brand','title','no','dates','bill','from','ref','due','pay','note','totals','sign','contact','foot','stamp'];
+const LIM=500;
+function cleanPos(p){
+  const out={};
+  if(!isObj(p))return out;
+  for(const id in p){
+    if(!TPL.some(t=>t.id===id)||!isObj(p[id]))continue;
+    for(const k of BLOCKS){
+      const v=p[id][k];
+      if(Array.isArray(v)&&v.length===2&&isFinite(+v[0])&&isFinite(+v[1])){
+        const x=Math.max(-LIM,Math.min(LIM,Math.round(+v[0]))),y=Math.max(-LIM,Math.min(LIM,Math.round(+v[1])));
+        if(x||y){(out[id]||(out[id]={}))[k]=[x,y]}
+      }
+    }
+  }
+  return out;
+}
+function posOf(s,k){
+  const p=s.pos&&s.pos[s.layout],v=p&&p[k];
+  return Array.isArray(v)&&v.length===2?[+v[0]||0,+v[1]||0]:[0,0];
+}
+/* the stamp is absolutely placed, every other block is nudged with relative left/top */
+function posStyle(k,x,y){return k==='stamp'?'left:calc(50% + '+x+'px);top:'+(380+y)+'px':'position:relative;left:'+x+'px;top:'+y+'px'}
 
 /* ---------- the invoice document ---------- */
 const tplOf=s=>TPL.find(t=>t.id===s.layout)||TPL[0];
@@ -110,6 +143,7 @@ function paperHTML(s){
   const A=/^#[0-9a-f]{6}$/i.test(s.accent||'')?s.accent:T.a;
   const col={a:A,a2:shade(A,.28),a3:shade(A,-.22),b:T.b,c:T.c||'#ffffff'};
   const f=s.from,t=s.to;
+  const bk=k=>{const v=posOf(s,k);return' data-b="'+k+'"'+((v[0]||v[1])?' style="'+posStyle(k,v[0],v[1])+'"':'')};
   const join=a=>a.filter(Boolean).join('<br>');
   const fromSmall=join([f.address&&nl(f.address),f.email&&esc(f.email),f.phone&&esc(f.phone),f.taxId&&('Tax ID: '+esc(f.taxId))]);
   const toSmall=join([t.address&&nl(t.address),t.email&&esc(t.email),t.taxId&&('Tax ID: '+esc(t.taxId))]);
@@ -132,28 +166,28 @@ function paperHTML(s){
   tr.push(R('Total'+(incl?' (incl. '+tl+')':''),M(c.total),paidOn?'p-strong':'p-grand'));
   if(paidOn){tr.push(R('Paid','-'+M(c.paid)));tr.push(R('Balance due',M(c.due),'p-grand'))}
   const stamps={paid:'Paid',overdue:'Overdue',draft:'Draft'};
-  const stamp=stamps[s.stamp]?'<div class="p-stamp p-stamp-'+s.stamp+'">'+stamps[s.stamp]+'</div>':'';
+  const stamp=stamps[s.stamp]?'<div class="p-stamp p-stamp-'+s.stamp+'"'+bk('stamp')+'>'+stamps[s.stamp]+'</div>':'';
   const ct=[f.phone&&['t',f.phone],f.email&&['e',f.email],f.address&&['a',f.address.replace(/\s*\n\s*/g,', ')]].filter(Boolean);
-  const contact=(ct.length||f.taxId)?'<div class="p-contact"><div class="p-label">Contact</div>'+ct.map(x=>'<div class="ct"><i>'+ICON[x[0]]+'</i><span>'+esc(x[1])+'</span></div>').join('')+(f.taxId?'<div class="ct tx"><span>Tax ID: '+esc(f.taxId)+'</span></div>':'')+'</div>':'';
+  const contact=(ct.length||f.taxId)?'<div class="p-contact"'+bk('contact')+'><div class="p-label">Contact</div>'+ct.map(x=>'<div class="ct"><i>'+ICON[x[0]]+'</i><span>'+esc(x[1])+'</span></div>').join('')+(f.taxId?'<div class="ct tx"><span>Tax ID: '+esc(f.taxId)+'</span></div>':'')+'</div>':'';
   const dated=(fmtDate(s.issue)||'-');
   return'<div class="paper" data-tpl="'+T.id+'"'+(T.num?' data-num="1"':'')+(s.logo?' data-logo="1"':'')+' style="--a:'+col.a+';--a2:'+col.a2+';--a3:'+col.a3+';--b:'+col.b+';--c:'+col.c+';--pg:'+T.pg+'">'
    +'<div class="p-deco" aria-hidden="true">'+(DECO[T.id]?DECO[T.id](col):'')+'</div>'
    +'<div class="p-page">'
-   +'<div class="p-brand">'+(s.logo?'<img class="p-logo" src="'+esc(s.logo)+'" alt="">':'')+'<div class="p-bizname'+(f.name?'':' p-hint')+'">'+(f.name?esc(f.name):'Your business name')+'</div></div>'
-   +'<div class="p-title"><h1>'+esc(s.title||'Invoice')+'</h1>'+(s.number?'<div class="p-num">No. '+esc(s.number)+'</div>':'')+'</div>'
-   +(s.number?'<div class="p-no">No. '+esc(s.number)+'</div>':'')
-   +'<dl class="p-dates">'+(s.number?'<div class="d-no"><dt>Invoice no.</dt><dd>'+esc(s.number)+'</dd></div>':'')+'<div><dt>Issued</dt><dd>'+dated+'</dd></div><div><dt>Due</dt><dd>'+(fmtDate(s.due)||'-')+'</dd></div>'+(s.po?'<div><dt>Reference</dt><dd>'+esc(s.po)+'</dd></div>':'')+'</dl>'
-   +'<div class="p-bill"><div class="p-label">'+esc(T.bill||'Billed to')+'</div><div class="p-client'+((t.name||t.company)?'':' p-hint')+'">'+((t.name||t.company)?join([esc(t.name),esc(t.company)]):'Client name')+'</div>'+(toSmall?'<div class="p-small">'+toSmall+'</div>':'')+'</div>'
-   +'<div class="p-from"><div class="p-label">'+esc(T.from||'From')+'</div><div class="p-client'+(f.name?'':' p-hint')+'">'+(f.name?esc(f.name):'Your business name')+'</div>'+(fromSmall?'<div class="p-small">'+fromSmall+'</div>':'')+'</div>'
-   +'<div class="p-ref"><div class="p-label">Reference</div><div class="p-refv">'+esc(s.po||s.number||'-')+'</div></div>'
-   +'<div class="p-due"><div class="p-label">'+(paidOn?'Balance due':'Total due')+'</div><div class="p-duev">'+M(c.due)+'</div></div>'
+   +'<div class="p-brand"'+bk('brand')+'>'+(s.logo?'<img class="p-logo" src="'+esc(s.logo)+'" alt="">':'')+'<div class="p-bizname'+(f.name?'':' p-hint')+'">'+(f.name?esc(f.name):'Your business name')+'</div></div>'
+   +'<div class="p-title"'+bk('title')+'><h1>'+esc(s.title||'Invoice')+'</h1>'+(s.number?'<div class="p-num">No. '+esc(s.number)+'</div>':'')+'</div>'
+   +(s.number?'<div class="p-no"'+bk('no')+'>No. '+esc(s.number)+'</div>':'')
+   +'<dl class="p-dates"'+bk('dates')+'>'+(s.number?'<div class="d-no"><dt>Invoice no.</dt><dd>'+esc(s.number)+'</dd></div>':'')+'<div><dt>Issued</dt><dd>'+dated+'</dd></div><div><dt>Due</dt><dd>'+(fmtDate(s.due)||'-')+'</dd></div>'+(s.po?'<div><dt>Reference</dt><dd>'+esc(s.po)+'</dd></div>':'')+'</dl>'
+   +'<div class="p-bill"'+bk('bill')+'><div class="p-label">'+esc(T.bill||'Billed to')+'</div><div class="p-client'+((t.name||t.company)?'':' p-hint')+'">'+((t.name||t.company)?join([esc(t.name),esc(t.company)]):'Client name')+'</div>'+(toSmall?'<div class="p-small">'+toSmall+'</div>':'')+'</div>'
+   +'<div class="p-from"'+bk('from')+'><div class="p-label">'+esc(T.from||'From')+'</div><div class="p-client'+(f.name?'':' p-hint')+'">'+(f.name?esc(f.name):'Your business name')+'</div>'+(fromSmall?'<div class="p-small">'+fromSmall+'</div>':'')+'</div>'
+   +'<div class="p-ref"'+bk('ref')+'><div class="p-label">Reference</div><div class="p-refv">'+esc(s.po||s.number||'-')+'</div></div>'
+   +'<div class="p-due"'+bk('due')+'><div class="p-label">'+(paidOn?'Balance due':'Total due')+'</div><div class="p-duev">'+M(c.due)+'</div></div>'
    +'<table class="p-items"><colgroup><col class="c-n"><col class="c-d"><col class="c-r"><col class="c-q"><col class="c-a"></colgroup><thead><tr><th class="c-n">No.</th><th class="c-d">Description</th><th class="c-r">Price</th><th class="c-q">Qty</th><th class="c-a">Amount</th></tr></thead><tbody>'+rows+'</tbody></table>'
-   +(s.payment?'<div class="p-pay"><div class="p-label">Payment details</div><div class="p-txt">'+nl(s.payment)+'</div></div>':'')
-   +(s.notes?'<div class="p-note"><div class="p-label">Notes</div><div class="p-txt">'+nl(s.notes)+'</div></div>':'')
-   +'<div class="p-totals">'+tr.join('')+'</div>'
-   +'<div class="p-sign"><div class="sg-line"></div><div class="sg-txt">Authorised signature</div></div>'
+   +(s.payment?'<div class="p-pay"'+bk('pay')+'><div class="p-label">Payment details</div><div class="p-txt">'+nl(s.payment)+'</div></div>':'')
+   +(s.notes?'<div class="p-note"'+bk('note')+'><div class="p-label">Notes</div><div class="p-txt">'+nl(s.notes)+'</div></div>':'')
+   +'<div class="p-totals"'+bk('totals')+'>'+tr.join('')+'</div>'
+   +(s.sign?'<div class="p-sign'+(s.signImg?' has-img':'')+'"'+bk('sign')+'>'+(s.signImg?'<img class="sg-img" src="'+esc(s.signImg)+'" alt="">':'')+'<div class="sg-line"></div><div class="sg-txt">'+esc(s.signLabel)+'</div></div>':'')
    +contact
-   +'<footer class="p-foot">'+(s.footer?nl(s.footer):'')+'</footer>'
+   +'<footer class="p-foot"'+bk('foot')+'>'+(s.footer?nl(s.footer):'')+'</footer>'
    +'</div>'+stamp+'</div>';
 }
 
@@ -317,6 +351,7 @@ function renderPreview(){
   const pages=planPages(paper.offsetHeight,safePoints(paper,k)).length;
   $('#pageCount').textContent='A4 · '+pages+(pages===1?' page':' pages');
   $('#fileName').textContent='File name: '+fileName();
+  applyMoveUi();
 }
 function renderSummary(){
   const s=app.inv,c=calc(s),M=fmt(s),r=[];
@@ -395,7 +430,7 @@ function afterChange(p){
   if(p==='inv.due'&&inv.terms!=='custom'){inv.terms='custom';setVal('inv.terms')}
   if(p==='inv.accent'&&!/^#[0-9a-f]{6}$/i.test(inv.accent))inv.accent='';
   if(p==='inv.currency'||p==='inv.whole'){setVal(p);renderItems();}
-  if(p==='inv.accent'||p==='inv.layout')renderDesign();
+  if(p==='inv.accent'||p==='inv.layout'||p==='inv.sign')renderDesign();
   if(p.startsWith('xt.'))renderTool(p==='xt.grp'||p==='xt.gst'||p==='xt.cur'?'pick':undefined);
   schedule();
 }
@@ -413,12 +448,15 @@ function renderDesign(){
   $('#tplName').textContent=T.name;
   $('#logoPrev').hidden=!inv.logo;$('#logoRemove').hidden=!inv.logo;
   if(inv.logo)$('#logoPrev').src=inv.logo;
+  $('#signOpts').hidden=!inv.sign;
+  $('#signPrev').hidden=!inv.signImg;$('#signRemove').hidden=!inv.signImg;
+  if(inv.signImg)$('#signPrev').src=inv.signImg;
 }
 function renderThumbs(){
   if(ui.tab!=='design'||document.body.dataset.route!=='invoice')return;
-  $$('.lay').forEach(b=>{const h=$('.thumb',b);h.firstElementChild.innerHTML=paperHTML({...app.inv,layout:b.dataset.id,accent:'',stamp:'none'});fit(h,{noHeight:true})});
+  $$('.lay').forEach(b=>{const h=$('.thumb',b);h.firstElementChild.innerHTML=paperHTML({...app.inv,layout:b.dataset.id,accent:'',stamp:'none',pos:{}});fit(h,{noHeight:true})});
 }
-$('#layGrid').addEventListener('click',e=>{const b=e.target.closest('.lay');if(!b)return;app.inv.layout=b.dataset.id;app.inv.accent='';markEdited();renderDesign();once($('#prevHost'),'swap');schedule()});
+$('#layGrid').addEventListener('click',e=>{const b=e.target.closest('.lay');if(!b)return;app.inv.layout=b.dataset.id;app.inv.accent='';mv.sel=null;markEdited();renderDesign();once($('#prevHost'),'swap');schedule()});
 $('#swatches').addEventListener('click',e=>{const b=e.target.closest('.sw');if(!b)return;app.inv.accent=b.dataset.c;markEdited();renderDesign();schedule()});
 function shrinkImage(file){
   return new Promise((res,rej)=>{
@@ -440,6 +478,142 @@ $('#logoFile').addEventListener('change',async e=>{
   e.target.value='';
 });
 $('#logoRemove').onclick=()=>{app.inv.logo='';renderDesign();schedule()};
+
+/* a photographed signature: paper white becomes transparent, then crop to the ink */
+function cleanSignature(file){
+  return new Promise((res,rej)=>{
+    const url=URL.createObjectURL(file),img=new Image();
+    img.onload=()=>{
+      const w0=img.naturalWidth||300,h0=img.naturalHeight||100,k=Math.min(1,520/w0,200/h0);
+      const c=document.createElement('canvas');c.width=Math.max(1,Math.round(w0*k));c.height=Math.max(1,Math.round(h0*k));
+      const x=c.getContext('2d');x.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);
+      try{
+        const d=x.getImageData(0,0,c.width,c.height),p=d.data,hist=new Uint32Array(256);let n=0;
+        for(let i=0;i<p.length;i+=4){if(p[i+3]>200){hist[Math.round(.299*p[i]+.587*p[i+1]+.114*p[i+2])]++;n++}}
+        let w=255,acc=0;
+        for(let v=0;v<256;v++){acc+=hist[v];if(acc>=n*.85){w=v;break}}
+        if(w<150)w=255;
+        const hi=w*.92,lo=w*.55;
+        let x0=c.width,y0=c.height,x1=-1,y1=-1;
+        for(let i=0;i<p.length;i+=4){
+          const l=.299*p[i]+.587*p[i+1]+.114*p[i+2],a=l>=hi?0:l<=lo?255:Math.round((hi-l)/(hi-lo)*255);
+          p[i+3]=Math.min(p[i+3],a);
+          if(p[i+3]>40){const q=i/4,px=q%c.width,py=(q-px)/c.width;if(px<x0)x0=px;if(px>x1)x1=px;if(py<y0)y0=py;if(py>y1)y1=py}
+        }
+        x.putImageData(d,0,0);
+        if(x1>=x0&&y1>=y0){
+          const m=4,cx=Math.max(0,x0-m),cy=Math.max(0,y0-m),cw=Math.min(c.width,x1+m+1)-cx,ch=Math.min(c.height,y1+m+1)-cy;
+          const o=document.createElement('canvas');o.width=cw;o.height=ch;o.getContext('2d').drawImage(c,cx,cy,cw,ch,0,0,cw,ch);
+          return res(o.toDataURL('image/png'));
+        }
+      }catch(e){}
+      res(c.toDataURL('image/png'));
+    };
+    img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('bad image'))};
+    img.src=url;
+  });
+}
+$('#signFile').addEventListener('change',async e=>{
+  const f=e.target.files&&e.target.files[0];if(!f)return;
+  try{app.inv.signImg=await cleanSignature(f);app.inv.sign=true;setVal('inv.sign');markEdited();renderDesign();schedule()}
+  catch(err){toast('That image could not be read. Try a PNG or JPG.')}
+  e.target.value='';
+});
+$('#signRemove').onclick=()=>{app.inv.signImg='';renderDesign();schedule()};
+
+/* ---------- move text: drag any block on the preview ---------- */
+const mv={on:false,sel:null,drag:null};
+const prevHostEl=$('#prevHost');
+const paperEl=()=>{const sc=prevHostEl.firstElementChild;return sc&&sc.firstElementChild};
+const movedCount=()=>{const p=app.inv.pos&&app.inv.pos[app.inv.layout];return p?Object.keys(p).length:0};
+function applyMoveUi(){
+  const p=paperEl();
+  if(p){p.classList.toggle('moving',mv.on);$$('[data-b]',p).forEach(e=>e.classList.toggle('sel',mv.on&&e.dataset.b===mv.sel))}
+  const b=$('#btnMove');
+  b.setAttribute('aria-pressed',String(mv.on));$('span',b).textContent=mv.on?'Done moving':'Move text';
+  $('#moveHint').hidden=!mv.on;
+  $('#btnMoveReset').hidden=!movedCount();
+}
+function setMove(on){mv.on=!!on;if(!on)mv.sel=null;applyMoveUi()}
+$('#btnMove').onclick=()=>setMove(!mv.on);
+$('#btnMoveReset').onclick=()=>{delete app.inv.pos[app.inv.layout];mv.sel=null;markEdited();schedule()};
+
+function commitPos(key,x,y){
+  const id=app.inv.layout;
+  if(!app.inv.pos)app.inv.pos={};
+  const t=app.inv.pos[id]||(app.inv.pos[id]={});
+  x=Math.max(-LIM,Math.min(LIM,Math.round(x)));y=Math.max(-LIM,Math.min(LIM,Math.round(y)));
+  if(x||y)t[key]=[x,y];else delete t[key];
+  if(!Object.keys(t).length)delete app.inv.pos[id];
+  markEdited();schedule();
+}
+/* edges other blocks and the page offer for snapping, in page pixels */
+function snapTargets(paper,el,k){
+  const pr=paper.getBoundingClientRect(),xs=[0,44,397,750,794],ys=[0,paper.offsetHeight/2];
+  $$('[data-b]',paper).forEach(o=>{
+    if(o===el||!o.getClientRects().length)return;
+    const r=o.getBoundingClientRect(),l=(r.left-pr.left)/k,rt=(r.right-pr.left)/k,t=(r.top-pr.top)/k,b=(r.bottom-pr.top)/k;
+    xs.push(l,(l+rt)/2,rt);ys.push(t,(t+b)/2,b);
+  });
+  return{xs,ys,pr};
+}
+function nearest(vals,list,thr){
+  let best=null;
+  vals.forEach(v=>list.forEach(t=>{const d=t-v;if(Math.abs(d)<=thr&&(best===null||Math.abs(d)<Math.abs(best.d)))best={d,at:t}}));
+  return best;
+}
+function guide(paper,cls,pos){
+  let g=$('.p-guide.'+cls,paper);
+  if(pos==null){if(g)g.remove();return}
+  if(!g){g=document.createElement('div');g.className='p-guide '+cls;paper.appendChild(g)}
+  if(cls==='gx')g.style.left=pos+'px';else g.style.top=pos+'px';
+}
+prevHostEl.addEventListener('pointerdown',e=>{
+  if(!mv.on||(e.pointerType==='mouse'&&e.button!==0))return;
+  const paper=paperEl(),el=e.target.closest&&e.target.closest('[data-b]');
+  if(!paper||!el||!paper.contains(el))return;
+  e.preventDefault();
+  const key=el.dataset.b,k=(prevHostEl.clientWidth/794)||1,o=posOf(app.inv,key),T=snapTargets(paper,el,k),r=el.getBoundingClientRect();
+  mv.sel=key;
+  $$('[data-b]',paper).forEach(x=>x.classList.toggle('sel',x===el));
+  mv.drag={el,key,k,id:e.pointerId,sx:e.clientX,sy:e.clientY,ox:o[0],oy:o[1],T,moved:false,
+    l:(r.left-T.pr.left)/k,r:(r.right-T.pr.left)/k,t:(r.top-T.pr.top)/k,b:(r.bottom-T.pr.top)/k,nx:o[0],ny:o[1]};
+  try{el.setPointerCapture(e.pointerId)}catch(err){}
+  el.classList.add('drag');
+});
+prevHostEl.addEventListener('pointermove',e=>{
+  const d=mv.drag;if(!d||e.pointerId!==d.id)return;
+  let dx=(e.clientX-d.sx)/d.k,dy=(e.clientY-d.sy)/d.k;
+  if(!d.moved){if(Math.hypot(dx,dy)*d.k<3)return;d.moved=true}
+  const paper=paperEl(),H=paper.offsetHeight,keep=28;
+  dx=Math.max(keep-d.r,Math.min(794-keep-d.l,dx));dy=Math.max(keep-d.b,Math.min(H-keep-d.t,dy));
+  const thr=5,sx=nearest([d.l+dx,(d.l+d.r)/2+dx,d.r+dx],d.T.xs,thr),sy=nearest([d.t+dy,(d.t+d.b)/2+dy,d.b+dy],d.T.ys,thr);
+  if(sx)dx+=sx.d;if(sy)dy+=sy.d;
+  guide(paper,'gx',sx?sx.at:null);guide(paper,'gy',sy?sy.at:null);
+  d.nx=Math.round(d.ox+dx);d.ny=Math.round(d.oy+dy);
+  d.el.style.cssText=posStyle(d.key,d.nx,d.ny);
+});
+function endDrag(e,cancel){
+  const d=mv.drag;if(!d||e.pointerId!==d.id)return;
+  mv.drag=null;d.el.classList.remove('drag');
+  const paper=paperEl();if(paper){guide(paper,'gx',null);guide(paper,'gy',null)}
+  if(d.moved&&!cancel)commitPos(d.key,d.nx,d.ny);
+  else if(d.moved){d.el.style.cssText=(d.ox||d.oy)?posStyle(d.key,d.ox,d.oy):''}
+}
+prevHostEl.addEventListener('pointerup',e=>endDrag(e,false));
+prevHostEl.addEventListener('pointercancel',e=>endDrag(e,true));
+/* arrow keys nudge the selected block: 1px, or 10px with Shift */
+document.addEventListener('keydown',e=>{
+  if(!mv.on)return;
+  const t=e.target,tag=t&&t.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'||(t&&t.isContentEditable))return;
+  if(e.key==='Escape'){setMove(false);return}
+  const dir={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[e.key];
+  if(!dir||!mv.sel)return;
+  e.preventDefault();
+  const o=posOf(app.inv,mv.sel),st=e.shiftKey?10:1;
+  commitPos(mv.sel,o[0]+dir[0]*st,o[1]+dir[1]*st);
+});
 
 /* ---------- tabs ---------- */
 const TABS=['details','design','send'];

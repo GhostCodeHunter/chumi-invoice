@@ -53,10 +53,10 @@ const DECO={
    +'<path d="M0 0H500C560 70 470 125 395 150C320 175 290 205 215 235C130 268 40 255 0 228Z" fill="url(#fa'+g+')"/>'
    +'<path d="M455 0H794V150C735 205 650 165 600 120C560 85 520 55 455 0Z" fill="url(#fb'+g+')"/>'
    +'<circle cx="540" cy="182" r="19" fill="'+c.a+'" opacity=".85"/><circle cx="345" cy="160" r="30" fill="url(#fb'+g+')"/>')
-  +sv(794,340,'left:0;bottom:0','<defs>'+grad('fc'+g,0,0,1,1,c.a2,c.a3)+grad('fd'+g,0,0,1,0,c.b,c.c)+'</defs>'
-   +'<path d="M0 70C70 25 190 12 268 62C338 106 348 178 306 238C272 286 222 322 150 340H0Z" fill="url(#fc'+g+')"/>'
+  +sv(794,400,'left:0;bottom:0','<defs>'+grad('fc'+g,0,0,1,1,c.a2,c.a3)+grad('fd'+g,0,0,1,0,c.b,c.c)+'</defs>'
+   +'<path d="M0 70C70 25 190 12 268 62C338 106 348 178 306 238C300 300 292 366 252 400H0Z" fill="url(#fc'+g+')"/>'
    +'<circle cx="306" cy="104" r="33" fill="url(#fd'+g+')"/><circle cx="414" cy="172" r="19" fill="'+c.a2+'"/>'
-   +'<path d="M350 340C400 285 480 255 560 285C625 308 700 290 794 225V340Z" fill="url(#fd'+g+')"/>')},
+   +'<path d="M350 400C400 322 480 286 560 312C625 334 700 312 794 246V400Z" fill="url(#fd'+g+')"/>')},
  charcoal:c=>'<div style="position:absolute;left:0;top:0;bottom:0;width:244px;background:'+c.b+'"></div>',
  redslash:c=>sv(794,160,'left:0;top:0','<polygon points="0,0 470,0 392,160 0,160" fill="'+c.b+'"/><polygon points="470,0 794,0 794,160 392,160" fill="'+c.a+'"/>')
   +sv(794,74,'left:0;bottom:0','<polygon points="0,0 470,0 506,74 0,74" fill="'+c.b+'"/><polygon points="660,74 794,74 794,30 704,30" fill="'+c.a+'"/>'),

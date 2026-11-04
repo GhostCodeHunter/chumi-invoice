@@ -253,6 +253,10 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 
 .ed-pre{position:sticky;top:84px}
 .pre-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font:600 12px var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.pre-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 10px;flex-wrap:wrap}
+.pre-tools .btn{height:36px;padding:0 12px;font-size:13px}
+.pre-tools .btn[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.move-hint{font-size:13px;line-height:1.45;color:var(--ink-3);margin:0 0 10px}
 .desk{background:var(--surface-2);border:2px solid var(--line);border-radius:16px;padding:20px}
 .desk .sheet-host{box-shadow:0 14px 30px -18px rgba(15,23,32,.5);border:1px solid var(--line)}
 .mseg{display:none}
@@ -326,7 +330,7 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 .p-brand{grid-area:brand}.p-title{grid-area:title}.p-dates{grid-area:dates}.p-bill{grid-area:bill}.p-from{grid-area:from}
 .p-ref{grid-area:ref;display:none}.p-due{grid-area:due;display:none}
 .p-items{grid-area:items}.p-pay{grid-area:pay}.p-note{grid-area:note}.p-totals{grid-area:totals;align-self:start}
-.p-sign{grid-area:sign;display:none}.p-contact{grid-area:contact}.p-foot{grid-area:foot;align-self:end}
+.p-sign{grid-area:sign;display:block}.p-contact{grid-area:contact}.p-foot{grid-area:foot;align-self:end}
 .p-brand{display:flex;align-items:center;gap:12px;align-self:start}
 .p-logo{max-height:56px;max-width:150px;object-fit:contain;display:block}
 .p-bizname{font:700 18px/1.2 var(--ph);color:var(--ink)}
@@ -360,6 +364,8 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 .p-sign{text-align:center;padding-top:44px}
 .sg-line{border-top:1px solid var(--ink);margin-bottom:6px}
 .sg-txt{font-size:11px;color:var(--mut)}
+.sg-img{display:block;width:100%;height:56px;object-fit:contain;object-position:center bottom;margin:0 0 4px}
+.p-sign.has-img{padding-top:0!important}
 .p-contact .ct{display:flex;align-items:flex-start;gap:8px;margin:0 0 6px}
 .p-contact .ct i{flex:none;width:20px;height:20px;border-radius:5px;background:var(--b);display:grid;place-items:center}
 .p-contact .ct i svg{width:12px;height:12px;display:block}
@@ -377,13 +383,13 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 /* ===== 1 · Navy Project ===== */
 [data-tpl="navy"]{--pb:'Montserrat','Segoe UI',system-ui,sans-serif;--ph:var(--pb);--ink:var(--a);--mut:var(--a);font-size:11px;font-weight:500}
 [data-tpl="navy"] .p-page{padding:46px 46px 34px;column-gap:16px;grid-template-columns:repeat(6,minmax(0,1fr));
-  grid-template-areas:"brand brand brand title title title" "brand brand brand dates dates dates" "ref ref bill bill from from" "items items items items items items" "due due due totals totals totals" "pay pay note note contact contact" ". . . . . ." "foot foot foot foot foot foot";
+  grid-template-areas:"brand brand brand title title title" "brand brand brand dates dates dates" "ref ref bill bill from from" "items items items items items items" "due due due totals totals totals" "pay pay note note contact contact" ". . . . sign sign" "foot foot foot foot foot foot";
   grid-template-rows:42px 24px 150px auto auto auto 1fr auto}
 [data-tpl="navy"] .p-title{text-align:right}
 [data-tpl="navy"] .p-title h1{font-size:40px;font-weight:800;letter-spacing:.01em;line-height:42px}
 [data-tpl="navy"] .p-title .p-num{display:none}
-[data-tpl="navy"] .p-dates{display:flex;justify-content:flex-end;gap:16px;font-size:10px;font-weight:700;text-transform:uppercase}
-[data-tpl="navy"] .p-dates div{gap:6px;padding:0}
+[data-tpl="navy"] .p-dates{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:2px 16px;font-size:10px;font-weight:700;text-transform:uppercase}
+[data-tpl="navy"] .p-dates div{gap:6px;padding:0;white-space:nowrap}
 [data-tpl="navy"] .p-dates dt{color:var(--a)}
 [data-tpl="navy"] .p-dates .d-no{display:flex}
 [data-tpl="navy"] .p-ref{display:block;align-self:start;padding-top:34px}
@@ -455,14 +461,14 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 [data-tpl="fluid"]{--ph:'Poppins','Segoe UI',system-ui,sans-serif;--pb:'Poppins','Segoe UI',system-ui,sans-serif;--ink:#4b4f5c;--mut:#6a6e7a;font-size:11px;font-weight:400}
 [data-tpl="fluid"] .p-page{padding:46px 44px 40px;
   grid-template-areas:"brand brand . ." "from from . ." ". bill dates dates" "items items items items" ". . totals totals" ". . . ." "pay pay sign sign" "note note sign sign" "contact contact foot foot";
-  grid-template-rows:auto auto auto auto auto 1fr auto auto auto}
+  grid-template-rows:auto minmax(132px,auto) auto auto auto 1fr minmax(70px,auto) minmax(70px,auto) auto}
 [data-tpl="fluid"] .p-title{display:none}
 [data-tpl="fluid"] .p-bizname{color:#fff;font-size:20px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
 [data-tpl="fluid"] .p-from{color:#fff;padding-top:10px}
 [data-tpl="fluid"] .p-from .p-label,[data-tpl="fluid"] .p-from .p-client{display:none}
 [data-tpl="fluid"] .p-from .p-small{color:#fff;margin:0;font-weight:500}
-[data-tpl="fluid"] .p-bill{padding-top:104px}
-[data-tpl="fluid"] .p-dates{padding-top:104px}
+[data-tpl="fluid"] .p-bill{padding-top:48px}
+[data-tpl="fluid"] .p-dates{padding-top:48px}
 [data-tpl="fluid"] .p-bill .p-label,[data-tpl="fluid"] .p-bill .p-small{color:var(--mut);font-weight:400;letter-spacing:0;text-transform:none;font-size:11px}
 [data-tpl="fluid"] .p-client{font-size:12px;font-weight:700;color:var(--ink)}
 [data-tpl="fluid"] .p-dates div{display:grid;grid-template-columns:1fr 1fr;gap:0 10px;padding:0}
@@ -489,9 +495,10 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 [data-tpl="fluid"] .p-pay .p-label,[data-tpl="fluid"] .p-note .p-label,[data-tpl="fluid"] .p-contact .p-label{color:#fff;font-weight:700;font-size:10.5px;letter-spacing:.06em}
 [data-tpl="fluid"] .p-pay .p-txt,[data-tpl="fluid"] .p-note .p-txt,[data-tpl="fluid"] .p-contact .ct span{color:#fff;font-size:10px}
 [data-tpl="fluid"] .p-contact .ct i{background:rgba(255,255,255,.22)}
-[data-tpl="fluid"] .p-sign{display:block;align-self:end;padding-top:20px}
-[data-tpl="fluid"] .p-foot{color:#fff;font-weight:500;align-self:end;text-align:right}
+[data-tpl="fluid"] .p-sign{display:block;align-self:start;justify-self:end;width:200px;padding-top:30px}
+[data-tpl="fluid"] .p-foot{color:#fff;font-weight:500;align-self:end;justify-self:end;text-align:right;max-width:260px;line-height:1.35;margin-bottom:-24px}
 [data-tpl="fluid"] .p-note,[data-tpl="fluid"] .p-contact{padding-top:12px}
+[data-tpl="fluid"] .p-pay,[data-tpl="fluid"] .p-note,[data-tpl="fluid"] .p-contact{max-width:226px}
 
 /* ===== 4 · Sky Grid ===== */
 [data-tpl="sky"]{--ph:'Poppins','Segoe UI',system-ui,sans-serif;--pb:'Poppins','Segoe UI',system-ui,sans-serif;--ink:#101216;--mut:#2c2f36;--ln:#2b2d31;font-size:11.5px}
@@ -579,7 +586,7 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 /* ===== 6 · Red Slash ===== */
 [data-tpl="redslash"]{--ph:'Lato','Segoe UI',system-ui,sans-serif;--pb:'Lato','Segoe UI',system-ui,sans-serif;--ink:#1c212b;--mut:#4a515c;--ln:#cdd1d6;font-size:11.5px}
 [data-tpl="redslash"] .p-page{padding:0 52px 0;
-  grid-template-areas:"brand title title title" "brand dates dates dates" "bill bill pay pay" "items items items items" "due due totals totals" "note note note note" ". . . ." "foot foot foot foot" "contact contact sign sign";
+  grid-template-areas:"brand title title title" "brand dates dates dates" "bill bill pay pay" "items items items items" "due due totals totals" "note note note note" ". . sign sign" "foot foot foot foot" "contact contact . .";
   grid-template-rows:84px 52px auto auto auto auto 1fr auto 74px}
 [data-tpl="redslash"] .p-brand{margin-left:-0px;padding-top:36px;align-self:start}
 [data-tpl="redslash"] .p-bizname{color:#fff;font-size:17px;letter-spacing:.03em;text-transform:uppercase}
@@ -590,7 +597,7 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 [data-tpl="redslash"] .p-dates div{padding:0;gap:6px}
 [data-tpl="redslash"] .p-dates dt,[data-tpl="redslash"] .p-dates dd{color:#fff}
 [data-tpl="redslash"] .p-dates .d-no{display:flex}
-[data-tpl="redslash"] .p-bill{padding-top:30px}[data-tpl="redslash"] .p-pay{padding-top:30px}
+[data-tpl="redslash"] .p-bill{padding-top:42px}[data-tpl="redslash"] .p-pay{padding-top:42px}
 [data-tpl="redslash"] .p-bill .p-label,[data-tpl="redslash"] .p-pay .p-label{color:var(--a);font-weight:700;letter-spacing:.02em}
 [data-tpl="redslash"] .p-bill .p-client{font-size:20px;font-weight:700}
 [data-tpl="redslash"] .p-pay{text-align:left;padding-left:14px}
@@ -615,14 +622,14 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 [data-tpl="redslash"] .p-contact .p-label{display:none}
 [data-tpl="redslash"] .p-contact .ct{margin:0;font-size:10px;color:#fff;gap:6px}
 [data-tpl="redslash"] .p-contact .ct i{background:var(--a);border-radius:50%}
-[data-tpl="redslash"] .p-sign{display:block;padding:0 0 12px;align-self:end;margin-left:20px}
+[data-tpl="redslash"] .p-sign{display:block;padding:0 0 12px;align-self:end;justify-self:end;width:200px}
 [data-tpl="redslash"] .p-sign .sg-txt{font-weight:700;color:var(--ink)}
 [data-tpl="redslash"] .p-foot{color:var(--mut);font-size:10px;padding:8px 0 14px;text-align:center}
 
 /* ===== 7 · Cream Studio ===== */
 [data-tpl="cream"]{--ph:'DM Sans','Segoe UI',system-ui,sans-serif;--pb:'DM Sans','Segoe UI',system-ui,sans-serif;--ink:#3b3128;--mut:#8a7f72;--ln:#d9d1c3;font-size:11px}
 [data-tpl="cream"] .p-page{padding:70px 56px 44px;grid-template-columns:repeat(4,minmax(0,1fr));
-  grid-template-areas:"title title title title" "bill bill dates dates" "items items items items" "pay pay totals totals" "note note totals totals" "brand brand from from" ". . . ." "foot foot foot foot"}
+  grid-template-areas:"title title title title" "bill bill dates dates" "items items items items" "pay pay totals totals" "note note totals totals" "brand brand from from" ". . sign sign" "foot foot foot foot"}
 [data-tpl="cream"] .p-title h1{font:700 62px/1 var(--ph);letter-spacing:.01em;color:var(--a)}
 [data-tpl="cream"] .p-title .p-num{display:none}
 [data-tpl="cream"] .p-bill{padding-top:50px}
@@ -660,7 +667,7 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 /* ===== 8 · Atelier ===== */
 [data-tpl="atelier"]{--ph:'Bodoni Moda','Didot',Georgia,serif;--pb:'Inter','Segoe UI',system-ui,sans-serif;--ink:#111;--mut:#333;--ln:#111;font-size:11.5px}
 [data-tpl="atelier"] .p-page{padding:62px 62px 50px;
-  grid-template-areas:"brand brand title title" ". . . ." "bill bill dates dates" "items items items items" ". . totals totals" "note note . ." "pay pay from from" ". . . ." "foot foot foot foot";
+  grid-template-areas:"brand brand title title" ". . . ." "bill bill dates dates" "items items items items" ". . totals totals" "note note . ." "pay pay from from" ". . sign sign" "foot foot foot foot";
   grid-template-rows:auto 56px auto auto auto auto auto 1fr auto}
 [data-tpl="atelier"] .p-bizname{font:400 46px/1 var(--ph)}
 [data-tpl="atelier"] .p-title{text-align:right}
@@ -695,7 +702,7 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 /* ===== 9 · Plain Ink ===== */
 [data-tpl="plain"]{--ph:'Inter','Segoe UI',system-ui,sans-serif;--pb:'Inter','Segoe UI',system-ui,sans-serif;--ink:#111;--mut:#333;--ln:#a9a9a9;font-size:11.5px}
 [data-tpl="plain"] .p-page{padding:70px 56px 48px;column-gap:44px;grid-template-columns:repeat(2,minmax(0,1fr));
-  grid-template-areas:"title dates" "brand brand" "bill from" "items items" "pay totals" "note note" ". ." "foot foot";
+  grid-template-areas:"title dates" "brand brand" "bill from" "items items" "pay totals" "note note" ". sign" "foot foot";
   grid-template-rows:auto auto auto auto auto auto 1fr auto}
 [data-tpl="plain"] .p-title h1{font:400 66px/1 var(--ph);letter-spacing:-.01em;color:var(--ink)}
 [data-tpl="plain"] .p-title .p-num{display:none}
@@ -770,10 +777,10 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 /* ===== 11 · Wave Quote ===== */
 [data-tpl="wave"]{--ph:'Montserrat','Segoe UI',system-ui,sans-serif;--pb:'Montserrat','Segoe UI',system-ui,sans-serif;--ink:var(--a);--mut:#6b5fa8;--ln:#cfc8ea;font-size:10px}
 [data-tpl="wave"] .p-page{padding:70px 40px 34px;column-gap:16px;
-  grid-template-areas:"brand . . ." "title title title title" "bill bill dates num" "items items items items" ". . totals totals" "pay pay pay pay" "note note note note" "contact contact contact contact" ". . . ." "foot foot foot foot";
+  grid-template-areas:"brand . . ." "title title title title" "bill bill dates num" "items items items items" ". . totals totals" "pay pay pay pay" "note note note note" "contact contact contact contact" ". . sign sign" "foot foot foot foot";
   grid-template-rows:auto auto auto auto auto auto auto auto 1fr auto}
-[data-tpl="wave"] .p-brand{padding-top:0;margin-bottom:76px}
-[data-tpl="wave"] .p-bizname{color:#fff;font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+[data-tpl="wave"] .p-brand{padding-top:0;margin-top:-24px;margin-bottom:100px;grid-column:1/4}
+[data-tpl="wave"] .p-bizname{color:#fff;font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;line-height:1.25;max-height:36px;overflow:hidden}
 [data-tpl="wave"] .p-title{display:flex;align-items:center;gap:18px}
 [data-tpl="wave"] .p-title h1{font-size:34px;font-weight:800;letter-spacing:.01em;white-space:nowrap}
 [data-tpl="wave"] .p-title::after{content:"";flex:1;height:2px;background:var(--a);margin-top:6px}
@@ -811,7 +818,7 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 /* ===== 12 · Dark Panel ===== */
 [data-tpl="dark"]{--ph:'Poppins','Segoe UI',system-ui,sans-serif;--pb:'Poppins','Segoe UI',system-ui,sans-serif;--ink:#202020;--mut:#6a6a6a;--ln:#e4e4e4;font-size:11px}
 [data-tpl="dark"] .p-page{padding:44px 38px 34px;column-gap:26px;grid-template-columns:250px minmax(0,1fr);
-  grid-template-areas:"dates brand" "dates title" "bill ref" "bill pay" "items items" "totals totals" "note contact" ". ." "foot foot";
+  grid-template-areas:"dates brand" "dates title" "bill ref" "bill pay" "items items" "totals totals" "note contact" ". sign" "foot foot";
   grid-template-rows:auto auto auto auto auto auto auto 1fr auto}
 [data-tpl="dark"] .p-dates{background:var(--a);color:#fff;padding:34px 26px 0;font-size:12px}
 [data-tpl="dark"] .p-dates div{display:block;padding:0 0 12px}
@@ -851,7 +858,7 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 /* ===== 13 · Wave Foot ===== */
 [data-tpl="foot"]{--ph:'Montserrat','Segoe UI',system-ui,sans-serif;--pb:'Montserrat','Segoe UI',system-ui,sans-serif;--ink:#181818;--mut:#3a3a3a;--ln:#d9d9db;font-size:11.5px}
 [data-tpl="foot"] .p-page{padding:54px 52px 50px;
-  grid-template-areas:"brand brand brand num" "title title title title" "dates dates . ." "bill bill from from" "items items items items" "pay pay totals totals" "note note . ." ". . . ." "foot foot foot foot";
+  grid-template-areas:"brand brand brand num" "title title title title" "dates dates . ." "bill bill from from" "items items items items" "pay pay totals totals" "note note . ." ". . sign sign" "foot foot foot foot";
   grid-template-rows:auto auto auto auto auto auto auto 1fr auto}
 [data-tpl="foot"] .p-bizname{font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.03em}
 [data-tpl="foot"] .p-title h1{font-size:76px;font-weight:800;letter-spacing:-.01em;color:var(--ink);padding-top:28px}
@@ -879,7 +886,7 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 [data-tpl="foot"] .p-totals .r{font-size:12px;padding:3px 12px}
 [data-tpl="foot"] .p-totals .r span:first-child{color:var(--ink)}
 [data-tpl="foot"] .p-totals .r.p-grand{border-top:0;font-size:12.5px;margin-top:0;padding-top:3px;padding-bottom:10px;border-bottom:1px solid #d8d8da}
-[data-tpl="foot"] .p-foot{padding-bottom:110px;color:var(--mut)}
+[data-tpl="foot"] .p-foot{padding-bottom:212px;color:var(--mut)}
 
 /* ===== 14 · Ledger ===== */
 [data-tpl="ledger"]{--ph:'Lato','Segoe UI',system-ui,sans-serif;--pb:'Lato','Segoe UI',system-ui,sans-serif;--ink:#111;--mut:#444;--ln:#c9c9c9;font-size:11px}
@@ -922,7 +929,7 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 /* ===== 15 · Lotus ===== */
 [data-tpl="lotus"]{--ph:'Cormorant Garamond',Georgia,'Times New Roman',serif;--pb:'Inter','Segoe UI',system-ui,sans-serif;--ink:#141414;--mut:#333;--ln:#1a1a1a;font-size:11px}
 [data-tpl="lotus"] .p-page{padding:58px 56px 44px;
-  grid-template-areas:"brand brand title title" ". . . ." "bill bill dates dates" "items items items items" ". . totals totals" "note note . ." ". . . ." "pay pay from from" "foot foot foot foot";
+  grid-template-areas:"brand brand title title" ". . . ." "bill bill dates dates" "items items items items" ". . totals totals" "note note . ." ". . sign sign" "pay pay from from" "foot foot foot foot";
   grid-template-rows:auto 40px auto auto auto auto 1fr auto auto}
 [data-tpl="lotus"] .p-bizname{font:600 26px/1.1 var(--ph);color:var(--a);letter-spacing:.02em}
 [data-tpl="lotus"] .p-title{text-align:right}
@@ -980,7 +987,7 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 [data-tpl="green"] .p-items td.c-d{text-align:left;padding-left:14px;font-weight:700}
 [data-tpl="green"] .p-pay{padding-top:24px}
 [data-tpl="green"] .p-pay .p-txt{font-size:9.5px;font-weight:700}
-[data-tpl="green"] .p-sign{display:block;padding-top:44px;align-self:end}
+[data-tpl="green"] .p-sign{display:block;padding:44px 0 6px;align-self:end}
 [data-tpl="green"] .p-sign .sg-txt{font-weight:700;color:var(--ink)}
 [data-tpl="green"] .p-totals{padding-top:22px}
 [data-tpl="green"] .p-totals .r{font-size:9.5px;font-weight:700;padding:3px 0}
@@ -1079,7 +1086,7 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 /* ===== 19 · Green Leaf ===== */
 [data-tpl="leaf"]{--ph:'Montserrat','Segoe UI',system-ui,sans-serif;--pb:'Montserrat','Segoe UI',system-ui,sans-serif;--ink:#3d4440;--mut:#5d6560;--ln:#e5ece6;font-size:10px}
 [data-tpl="leaf"] .p-page{padding:68px 54px 44px;column-gap:18px;
-  grid-template-areas:"brand title title title" "bill bill dates dates" "items items items items" "contact . totals totals" "pay pay totals totals" "note note note note" ". . . ." "foot foot foot foot";
+  grid-template-areas:"brand title title title" "bill bill dates dates" "items items items items" "contact . totals totals" "pay pay totals totals" "note note note note" ". . sign sign" "foot foot foot foot";
   grid-template-rows:auto auto auto auto auto auto 1fr auto}
 [data-tpl="leaf"] .p-bizname{font-size:16px;font-weight:700;color:var(--ink)}
 [data-tpl="leaf"] .p-title{text-align:right}
@@ -1113,9 +1120,23 @@ input.num{font-family:var(--font-mono);text-align:right;font-size:14px}
 [data-tpl="leaf"] .p-note{padding-top:14px;grid-column:3/5;text-align:right;grid-row:6}
 [data-tpl="leaf"] .p-foot{padding-bottom:10px;grid-column:3/5;text-align:right}
 
+/* ---------- signature spot for the templates that had none ---------- */
+[data-tpl="navy"] .p-sign,[data-tpl="cream"] .p-sign,[data-tpl="atelier"] .p-sign,[data-tpl="plain"] .p-sign,[data-tpl="wave"] .p-sign,[data-tpl="dark"] .p-sign,[data-tpl="foot"] .p-sign,[data-tpl="lotus"] .p-sign,[data-tpl="leaf"] .p-sign{align-self:end;justify-self:end;width:200px;padding:0 0 10px}
+[data-tpl="navy"] .sg-line{border-top-color:var(--a)}
+[data-tpl="navy"] .sg-txt,[data-tpl="leaf"] .sg-txt,[data-tpl="wave"] .sg-txt{color:var(--a);font-weight:700}
+
 /* elements a template does not place in its grid are hidden, so they never create an extra column */
 [data-tpl="sky"] .p-from,[data-tpl="charcoal"] .p-from,[data-tpl="redslash"] .p-from,[data-tpl="geo"] .p-from,[data-tpl="wave"] .p-from,[data-tpl="dark"] .p-from,[data-tpl="ledger"] .p-from,[data-tpl="band"] .p-from,[data-tpl="yellow"] .p-from,[data-tpl="leaf"] .p-from{display:none}
 [data-tpl="cream"] .p-contact,[data-tpl="atelier"] .p-contact,[data-tpl="plain"] .p-contact,[data-tpl="foot"] .p-contact,[data-tpl="lotus"] .p-contact{display:none}
+
+/* ---------- move-text mode: on screen only, never in the export ---------- */
+.paper.moving [data-b]{outline:1.5px dashed rgba(91,61,245,.6);outline-offset:3px;cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none}
+.paper.moving [data-b].sel{outline:2px solid #5B3DF5}
+.paper.moving .p-stamp{pointer-events:auto}
+.paper.moving [data-b].drag{cursor:grabbing;outline-color:#FF2D95}
+.p-guide{position:absolute;z-index:9;background:#FF2D95;pointer-events:none}
+.p-guide.gx{top:0;bottom:0;width:2px;margin-left:-1px}
+.p-guide.gy{left:0;right:0;height:2px;margin-top:-1px}
 
 
 /* ---------- motion ---------- */
@@ -1276,6 +1297,7 @@ html.vt [data-view].enter{animation:none}
 <symbol id="i-img" viewBox="0 0 24 24"><path d="M4 5h16v14H4zM4 16l5-5 4 4 3-3 4 4M9 9h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 8v5M12 17h.01M10.3 4L2.8 17.5A2 2 0 004.5 20.5h15a2 2 0 001.7-3L13.7 4a2 2 0 00-3.4 0z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-move" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M12 3l-3 3M12 3l3 3M12 21l-3-3M12 21l3-3M3 12l3-3M3 12l3 3M21 12l-3-3M21 12l-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 <symbol id="i-new" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8zM14 3v5h5M12 12v6M9 15h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M3 7h3.5c1.6 0 3 .8 3.9 2.1l3.2 4.8c.9 1.3 2.3 2.1 3.9 2.1H21M3 17h3.5c1.6 0 3-.8 3.9-2.1M13.6 9.1c.9-1.3 2.3-2.1 3.9-2.1H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </defs></svg>
@@ -1469,6 +1491,20 @@ html.vt [data-view].enter{animation:none}
               <div class="f"><label for="b-stamp">Status stamp</label><select id="b-stamp" data-bind="inv.stamp"><option value="none">No stamp</option><option value="paid">Paid</option><option value="overdue">Overdue</option><option value="draft">Draft</option></select></div>
             </div>
           </div>
+          <div class="card"><h3>Signature<small>Optional</small></h3>
+            <div class="stack">
+              <label class="check"><input id="b-sign" type="checkbox" data-bind="inv.sign">Add an authorised signature line</label>
+              <div class="stack" id="signOpts" hidden>
+                <div class="f"><label for="b-signlabel">Text under the line</label><input id="b-signlabel" type="text" maxlength="40" data-bind="inv.signLabel" autocomplete="off"></div>
+                <div class="logoline">
+                  <span class="btn btn-quiet btn-sm filebtn"><svg class="ic"><use href="#i-img"/></svg>Upload signature<input id="signFile" type="file" accept="image/*" aria-label="Upload signature image"></span>
+                  <img id="signPrev" alt="Your signature" hidden>
+                  <button class="btn btn-quiet btn-sm" id="signRemove" type="button" hidden>Remove signature</button>
+                </div>
+                <p class="note">Sign on white paper and take a photo. The white background is removed for you.</p>
+              </div>
+            </div>
+          </div>
           <div class="nextrow"><button class="btn btn-quiet" type="button" data-goto="details"><span class="arr back" aria-hidden="true">←</span> Details</button><button class="btn btn-primary" type="button" data-goto="send">Next: send it <span class="arr" aria-hidden="true">→</span></button></div>
         </section>
 
@@ -1494,6 +1530,11 @@ html.vt [data-view].enter{animation:none}
 
       <aside class="ed-pre" aria-label="Invoice preview">
         <div class="pre-head"><span>Live preview</span><span id="pageCount">A4 · 1 page</span></div>
+        <div class="pre-tools">
+          <button class="btn btn-quiet btn-sm" id="btnMove" type="button" aria-pressed="false"><svg class="ic"><use href="#i-move"/></svg><span>Move text</span></button>
+          <button class="btn btn-quiet btn-sm" id="btnMoveReset" type="button" hidden>Reset positions</button>
+        </div>
+        <p class="move-hint" id="moveHint" hidden>Drag any block to place it. Pink lines show when it lines up. Arrow keys nudge the selected block.</p>
         <div class="desk"><div class="sheet-host" id="prevHost"><div class="scaler"></div></div></div>
       </aside>
     </div>
@@ -1774,8 +1815,9 @@ function sampleState(){
     notes:'Thank you for your business!',
     payment:'Bank transfer to Example Bank\nAccount name: Northstar Studio\nAccount no. 0000 0000. Please quote the invoice number.',
     footer:'Questions about this invoice? Reply to the email it came with.',
-    layout:DEFAULT_TPL,accent:''};
+    layout:DEFAULT_TPL,accent:'',sign:false,signLabel:'Authorised signature',signImg:'',pos:{}};
 }
+const clonePos=p=>JSON.parse(JSON.stringify(p||{}));
 function blankInvoice(keep){
   const t=today(),o=keep||sampleState();
   return{sample:false,title:o.title||'Invoice',number:keep?bump(keep.number):'INV-001',issue:t,terms:o.terms||'14',due:addDays(t,o.terms==='custom'?14:(+o.terms||0)),po:'',stamp:'none',
@@ -1783,7 +1825,8 @@ function blankInvoice(keep){
     to:{name:'',company:'',email:'',address:'',taxId:''},
     logo:keep?keep.logo:'',currency:o.currency,items:[item('',1,'')],
     discount:{type:'percent',value:''},tax:keep?{...keep.tax,fixed:'',fixedFor:''}:{label:'Tax',rate:'',inclusive:false},adjustment:'',paid:'',whole:keep?!!keep.whole:false,
-    notes:keep?keep.notes:'',payment:keep?keep.payment:'',footer:keep?keep.footer:'',layout:o.layout,accent:o.accent};
+    notes:keep?keep.notes:'',payment:keep?keep.payment:'',footer:keep?keep.footer:'',layout:o.layout,accent:o.accent,
+    sign:!!o.sign,signLabel:typeof o.signLabel==='string'?o.signLabel:'Authorised signature',signImg:keep?(keep.signImg||''):'',pos:keep?clonePos(keep.pos):{}};
 }
 const defaultTool=()=>({total:'25000',n:'5',cat:'it',grp:'all',gst:'18',cur:'INR',seed:'1'});
 const isObj=v=>v&&typeof v==='object'&&!Array.isArray(v);
@@ -1801,6 +1844,12 @@ function load(){
   if(!/^#[0-9a-f]{6}$/i.test(app.inv.accent||''))app.inv.accent='';
   if(!/^\d{1,12}$/.test(String(app.xt.total).replace(/,/g,'')))app.xt.total=defaultTool().total;
   app.inv.items.forEach(i=>{if(!i.id)i.id=uid()});
+  const iv=app.inv;
+  iv.sign=!!iv.sign;
+  if(typeof iv.signLabel!=='string')iv.signLabel='Authorised signature';
+  iv.signLabel=iv.signLabel.slice(0,40);
+  if(typeof iv.signImg!=='string'||!/^data:image\/(png|jpeg|webp|gif);base64,/.test(iv.signImg))iv.signImg='';
+  iv.pos=cleanPos(iv.pos);
 }
 function getPath(o,p){return p.split('.').reduce((a,k)=>a==null?a:a[k],o)}
 function setPath(o,p,v){const k=p.split('.');let t=o;for(let i=0;i<k.length-1;i++)t=t[k[i]];t[k[k.length-1]]=v}
@@ -1860,10 +1909,10 @@ const DECO={
    +'<path d="M0 0H500C560 70 470 125 395 150C320 175 290 205 215 235C130 268 40 255 0 228Z" fill="url(#fa'+g+')"/>'
    +'<path d="M455 0H794V150C735 205 650 165 600 120C560 85 520 55 455 0Z" fill="url(#fb'+g+')"/>'
    +'<circle cx="540" cy="182" r="19" fill="'+c.a+'" opacity=".85"/><circle cx="345" cy="160" r="30" fill="url(#fb'+g+')"/>')
-  +sv(794,340,'left:0;bottom:0','<defs>'+grad('fc'+g,0,0,1,1,c.a2,c.a3)+grad('fd'+g,0,0,1,0,c.b,c.c)+'</defs>'
-   +'<path d="M0 70C70 25 190 12 268 62C338 106 348 178 306 238C272 286 222 322 150 340H0Z" fill="url(#fc'+g+')"/>'
+  +sv(794,400,'left:0;bottom:0','<defs>'+grad('fc'+g,0,0,1,1,c.a2,c.a3)+grad('fd'+g,0,0,1,0,c.b,c.c)+'</defs>'
+   +'<path d="M0 70C70 25 190 12 268 62C338 106 348 178 306 238C300 300 292 366 252 400H0Z" fill="url(#fc'+g+')"/>'
    +'<circle cx="306" cy="104" r="33" fill="url(#fd'+g+')"/><circle cx="414" cy="172" r="19" fill="'+c.a2+'"/>'
-   +'<path d="M350 340C400 285 480 255 560 285C625 308 700 290 794 225V340Z" fill="url(#fd'+g+')"/>')},
+   +'<path d="M350 400C400 322 480 286 560 312C625 334 700 312 794 246V400Z" fill="url(#fd'+g+')"/>')},
  charcoal:c=>'<div style="position:absolute;left:0;top:0;bottom:0;width:244px;background:'+c.b+'"></div>',
  redslash:c=>sv(794,160,'left:0;top:0','<polygon points="0,0 470,0 392,160 0,160" fill="'+c.b+'"/><polygon points="470,0 794,0 794,160 392,160" fill="'+c.a+'"/>')
   +sv(794,74,'left:0;bottom:0','<polygon points="0,0 470,0 506,74 0,74" fill="'+c.b+'"/><polygon points="660,74 794,74 794,30 704,30" fill="'+c.a+'"/>'),
@@ -1882,6 +1931,31 @@ const DECO={
 };
 
 
+/* ---------- block positions (drag to move) ---------- */
+const BLOCKS=['brand','title','no','dates','bill','from','ref','due','pay','note','totals','sign','contact','foot','stamp'];
+const LIM=500;
+function cleanPos(p){
+  const out={};
+  if(!isObj(p))return out;
+  for(const id in p){
+    if(!TPL.some(t=>t.id===id)||!isObj(p[id]))continue;
+    for(const k of BLOCKS){
+      const v=p[id][k];
+      if(Array.isArray(v)&&v.length===2&&isFinite(+v[0])&&isFinite(+v[1])){
+        const x=Math.max(-LIM,Math.min(LIM,Math.round(+v[0]))),y=Math.max(-LIM,Math.min(LIM,Math.round(+v[1])));
+        if(x||y){(out[id]||(out[id]={}))[k]=[x,y]}
+      }
+    }
+  }
+  return out;
+}
+function posOf(s,k){
+  const p=s.pos&&s.pos[s.layout],v=p&&p[k];
+  return Array.isArray(v)&&v.length===2?[+v[0]||0,+v[1]||0]:[0,0];
+}
+/* the stamp is absolutely placed, every other block is nudged with relative left/top */
+function posStyle(k,x,y){return k==='stamp'?'left:calc(50% + '+x+'px);top:'+(380+y)+'px':'position:relative;left:'+x+'px;top:'+y+'px'}
+
 /* ---------- the invoice document ---------- */
 const tplOf=s=>TPL.find(t=>t.id===s.layout)||TPL[0];
 function paperHTML(s){
@@ -1889,6 +1963,7 @@ function paperHTML(s){
   const A=/^#[0-9a-f]{6}$/i.test(s.accent||'')?s.accent:T.a;
   const col={a:A,a2:shade(A,.28),a3:shade(A,-.22),b:T.b,c:T.c||'#ffffff'};
   const f=s.from,t=s.to;
+  const bk=k=>{const v=posOf(s,k);return' data-b="'+k+'"'+((v[0]||v[1])?' style="'+posStyle(k,v[0],v[1])+'"':'')};
   const join=a=>a.filter(Boolean).join('<br>');
   const fromSmall=join([f.address&&nl(f.address),f.email&&esc(f.email),f.phone&&esc(f.phone),f.taxId&&('Tax ID: '+esc(f.taxId))]);
   const toSmall=join([t.address&&nl(t.address),t.email&&esc(t.email),t.taxId&&('Tax ID: '+esc(t.taxId))]);
@@ -1911,28 +1986,28 @@ function paperHTML(s){
   tr.push(R('Total'+(incl?' (incl. '+tl+')':''),M(c.total),paidOn?'p-strong':'p-grand'));
   if(paidOn){tr.push(R('Paid','-'+M(c.paid)));tr.push(R('Balance due',M(c.due),'p-grand'))}
   const stamps={paid:'Paid',overdue:'Overdue',draft:'Draft'};
-  const stamp=stamps[s.stamp]?'<div class="p-stamp p-stamp-'+s.stamp+'">'+stamps[s.stamp]+'</div>':'';
+  const stamp=stamps[s.stamp]?'<div class="p-stamp p-stamp-'+s.stamp+'"'+bk('stamp')+'>'+stamps[s.stamp]+'</div>':'';
   const ct=[f.phone&&['t',f.phone],f.email&&['e',f.email],f.address&&['a',f.address.replace(/\s*\n\s*/g,', ')]].filter(Boolean);
-  const contact=(ct.length||f.taxId)?'<div class="p-contact"><div class="p-label">Contact</div>'+ct.map(x=>'<div class="ct"><i>'+ICON[x[0]]+'</i><span>'+esc(x[1])+'</span></div>').join('')+(f.taxId?'<div class="ct tx"><span>Tax ID: '+esc(f.taxId)+'</span></div>':'')+'</div>':'';
+  const contact=(ct.length||f.taxId)?'<div class="p-contact"'+bk('contact')+'><div class="p-label">Contact</div>'+ct.map(x=>'<div class="ct"><i>'+ICON[x[0]]+'</i><span>'+esc(x[1])+'</span></div>').join('')+(f.taxId?'<div class="ct tx"><span>Tax ID: '+esc(f.taxId)+'</span></div>':'')+'</div>':'';
   const dated=(fmtDate(s.issue)||'-');
   return'<div class="paper" data-tpl="'+T.id+'"'+(T.num?' data-num="1"':'')+(s.logo?' data-logo="1"':'')+' style="--a:'+col.a+';--a2:'+col.a2+';--a3:'+col.a3+';--b:'+col.b+';--c:'+col.c+';--pg:'+T.pg+'">'
    +'<div class="p-deco" aria-hidden="true">'+(DECO[T.id]?DECO[T.id](col):'')+'</div>'
    +'<div class="p-page">'
-   +'<div class="p-brand">'+(s.logo?'<img class="p-logo" src="'+esc(s.logo)+'" alt="">':'')+'<div class="p-bizname'+(f.name?'':' p-hint')+'">'+(f.name?esc(f.name):'Your business name')+'</div></div>'
-   +'<div class="p-title"><h1>'+esc(s.title||'Invoice')+'</h1>'+(s.number?'<div class="p-num">No. '+esc(s.number)+'</div>':'')+'</div>'
-   +(s.number?'<div class="p-no">No. '+esc(s.number)+'</div>':'')
-   +'<dl class="p-dates">'+(s.number?'<div class="d-no"><dt>Invoice no.</dt><dd>'+esc(s.number)+'</dd></div>':'')+'<div><dt>Issued</dt><dd>'+dated+'</dd></div><div><dt>Due</dt><dd>'+(fmtDate(s.due)||'-')+'</dd></div>'+(s.po?'<div><dt>Reference</dt><dd>'+esc(s.po)+'</dd></div>':'')+'</dl>'
-   +'<div class="p-bill"><div class="p-label">'+esc(T.bill||'Billed to')+'</div><div class="p-client'+((t.name||t.company)?'':' p-hint')+'">'+((t.name||t.company)?join([esc(t.name),esc(t.company)]):'Client name')+'</div>'+(toSmall?'<div class="p-small">'+toSmall+'</div>':'')+'</div>'
-   +'<div class="p-from"><div class="p-label">'+esc(T.from||'From')+'</div><div class="p-client'+(f.name?'':' p-hint')+'">'+(f.name?esc(f.name):'Your business name')+'</div>'+(fromSmall?'<div class="p-small">'+fromSmall+'</div>':'')+'</div>'
-   +'<div class="p-ref"><div class="p-label">Reference</div><div class="p-refv">'+esc(s.po||s.number||'-')+'</div></div>'
-   +'<div class="p-due"><div class="p-label">'+(paidOn?'Balance due':'Total due')+'</div><div class="p-duev">'+M(c.due)+'</div></div>'
+   +'<div class="p-brand"'+bk('brand')+'>'+(s.logo?'<img class="p-logo" src="'+esc(s.logo)+'" alt="">':'')+'<div class="p-bizname'+(f.name?'':' p-hint')+'">'+(f.name?esc(f.name):'Your business name')+'</div></div>'
+   +'<div class="p-title"'+bk('title')+'><h1>'+esc(s.title||'Invoice')+'</h1>'+(s.number?'<div class="p-num">No. '+esc(s.number)+'</div>':'')+'</div>'
+   +(s.number?'<div class="p-no"'+bk('no')+'>No. '+esc(s.number)+'</div>':'')
+   +'<dl class="p-dates"'+bk('dates')+'>'+(s.number?'<div class="d-no"><dt>Invoice no.</dt><dd>'+esc(s.number)+'</dd></div>':'')+'<div><dt>Issued</dt><dd>'+dated+'</dd></div><div><dt>Due</dt><dd>'+(fmtDate(s.due)||'-')+'</dd></div>'+(s.po?'<div><dt>Reference</dt><dd>'+esc(s.po)+'</dd></div>':'')+'</dl>'
+   +'<div class="p-bill"'+bk('bill')+'><div class="p-label">'+esc(T.bill||'Billed to')+'</div><div class="p-client'+((t.name||t.company)?'':' p-hint')+'">'+((t.name||t.company)?join([esc(t.name),esc(t.company)]):'Client name')+'</div>'+(toSmall?'<div class="p-small">'+toSmall+'</div>':'')+'</div>'
+   +'<div class="p-from"'+bk('from')+'><div class="p-label">'+esc(T.from||'From')+'</div><div class="p-client'+(f.name?'':' p-hint')+'">'+(f.name?esc(f.name):'Your business name')+'</div>'+(fromSmall?'<div class="p-small">'+fromSmall+'</div>':'')+'</div>'
+   +'<div class="p-ref"'+bk('ref')+'><div class="p-label">Reference</div><div class="p-refv">'+esc(s.po||s.number||'-')+'</div></div>'
+   +'<div class="p-due"'+bk('due')+'><div class="p-label">'+(paidOn?'Balance due':'Total due')+'</div><div class="p-duev">'+M(c.due)+'</div></div>'
    +'<table class="p-items"><colgroup><col class="c-n"><col class="c-d"><col class="c-r"><col class="c-q"><col class="c-a"></colgroup><thead><tr><th class="c-n">No.</th><th class="c-d">Description</th><th class="c-r">Price</th><th class="c-q">Qty</th><th class="c-a">Amount</th></tr></thead><tbody>'+rows+'</tbody></table>'
-   +(s.payment?'<div class="p-pay"><div class="p-label">Payment details</div><div class="p-txt">'+nl(s.payment)+'</div></div>':'')
-   +(s.notes?'<div class="p-note"><div class="p-label">Notes</div><div class="p-txt">'+nl(s.notes)+'</div></div>':'')
-   +'<div class="p-totals">'+tr.join('')+'</div>'
-   +'<div class="p-sign"><div class="sg-line"></div><div class="sg-txt">Authorised signature</div></div>'
+   +(s.payment?'<div class="p-pay"'+bk('pay')+'><div class="p-label">Payment details</div><div class="p-txt">'+nl(s.payment)+'</div></div>':'')
+   +(s.notes?'<div class="p-note"'+bk('note')+'><div class="p-label">Notes</div><div class="p-txt">'+nl(s.notes)+'</div></div>':'')
+   +'<div class="p-totals"'+bk('totals')+'>'+tr.join('')+'</div>'
+   +(s.sign?'<div class="p-sign'+(s.signImg?' has-img':'')+'"'+bk('sign')+'>'+(s.signImg?'<img class="sg-img" src="'+esc(s.signImg)+'" alt="">':'')+'<div class="sg-line"></div><div class="sg-txt">'+esc(s.signLabel)+'</div></div>':'')
    +contact
-   +'<footer class="p-foot">'+(s.footer?nl(s.footer):'')+'</footer>'
+   +'<footer class="p-foot"'+bk('foot')+'>'+(s.footer?nl(s.footer):'')+'</footer>'
    +'</div>'+stamp+'</div>';
 }
 
@@ -2096,6 +2171,7 @@ function renderPreview(){
   const pages=planPages(paper.offsetHeight,safePoints(paper,k)).length;
   $('#pageCount').textContent='A4 · '+pages+(pages===1?' page':' pages');
   $('#fileName').textContent='File name: '+fileName();
+  applyMoveUi();
 }
 function renderSummary(){
   const s=app.inv,c=calc(s),M=fmt(s),r=[];
@@ -2174,7 +2250,7 @@ function afterChange(p){
   if(p==='inv.due'&&inv.terms!=='custom'){inv.terms='custom';setVal('inv.terms')}
   if(p==='inv.accent'&&!/^#[0-9a-f]{6}$/i.test(inv.accent))inv.accent='';
   if(p==='inv.currency'||p==='inv.whole'){setVal(p);renderItems();}
-  if(p==='inv.accent'||p==='inv.layout')renderDesign();
+  if(p==='inv.accent'||p==='inv.layout'||p==='inv.sign')renderDesign();
   if(p.startsWith('xt.'))renderTool(p==='xt.grp'||p==='xt.gst'||p==='xt.cur'?'pick':undefined);
   schedule();
 }
@@ -2192,12 +2268,15 @@ function renderDesign(){
   $('#tplName').textContent=T.name;
   $('#logoPrev').hidden=!inv.logo;$('#logoRemove').hidden=!inv.logo;
   if(inv.logo)$('#logoPrev').src=inv.logo;
+  $('#signOpts').hidden=!inv.sign;
+  $('#signPrev').hidden=!inv.signImg;$('#signRemove').hidden=!inv.signImg;
+  if(inv.signImg)$('#signPrev').src=inv.signImg;
 }
 function renderThumbs(){
   if(ui.tab!=='design'||document.body.dataset.route!=='invoice')return;
-  $$('.lay').forEach(b=>{const h=$('.thumb',b);h.firstElementChild.innerHTML=paperHTML({...app.inv,layout:b.dataset.id,accent:'',stamp:'none'});fit(h,{noHeight:true})});
+  $$('.lay').forEach(b=>{const h=$('.thumb',b);h.firstElementChild.innerHTML=paperHTML({...app.inv,layout:b.dataset.id,accent:'',stamp:'none',pos:{}});fit(h,{noHeight:true})});
 }
-$('#layGrid').addEventListener('click',e=>{const b=e.target.closest('.lay');if(!b)return;app.inv.layout=b.dataset.id;app.inv.accent='';markEdited();renderDesign();once($('#prevHost'),'swap');schedule()});
+$('#layGrid').addEventListener('click',e=>{const b=e.target.closest('.lay');if(!b)return;app.inv.layout=b.dataset.id;app.inv.accent='';mv.sel=null;markEdited();renderDesign();once($('#prevHost'),'swap');schedule()});
 $('#swatches').addEventListener('click',e=>{const b=e.target.closest('.sw');if(!b)return;app.inv.accent=b.dataset.c;markEdited();renderDesign();schedule()});
 function shrinkImage(file){
   return new Promise((res,rej)=>{
@@ -2219,6 +2298,142 @@ $('#logoFile').addEventListener('change',async e=>{
   e.target.value='';
 });
 $('#logoRemove').onclick=()=>{app.inv.logo='';renderDesign();schedule()};
+
+/* a photographed signature: paper white becomes transparent, then crop to the ink */
+function cleanSignature(file){
+  return new Promise((res,rej)=>{
+    const url=URL.createObjectURL(file),img=new Image();
+    img.onload=()=>{
+      const w0=img.naturalWidth||300,h0=img.naturalHeight||100,k=Math.min(1,520/w0,200/h0);
+      const c=document.createElement('canvas');c.width=Math.max(1,Math.round(w0*k));c.height=Math.max(1,Math.round(h0*k));
+      const x=c.getContext('2d');x.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);
+      try{
+        const d=x.getImageData(0,0,c.width,c.height),p=d.data,hist=new Uint32Array(256);let n=0;
+        for(let i=0;i<p.length;i+=4){if(p[i+3]>200){hist[Math.round(.299*p[i]+.587*p[i+1]+.114*p[i+2])]++;n++}}
+        let w=255,acc=0;
+        for(let v=0;v<256;v++){acc+=hist[v];if(acc>=n*.85){w=v;break}}
+        if(w<150)w=255;
+        const hi=w*.92,lo=w*.55;
+        let x0=c.width,y0=c.height,x1=-1,y1=-1;
+        for(let i=0;i<p.length;i+=4){
+          const l=.299*p[i]+.587*p[i+1]+.114*p[i+2],a=l>=hi?0:l<=lo?255:Math.round((hi-l)/(hi-lo)*255);
+          p[i+3]=Math.min(p[i+3],a);
+          if(p[i+3]>40){const q=i/4,px=q%c.width,py=(q-px)/c.width;if(px<x0)x0=px;if(px>x1)x1=px;if(py<y0)y0=py;if(py>y1)y1=py}
+        }
+        x.putImageData(d,0,0);
+        if(x1>=x0&&y1>=y0){
+          const m=4,cx=Math.max(0,x0-m),cy=Math.max(0,y0-m),cw=Math.min(c.width,x1+m+1)-cx,ch=Math.min(c.height,y1+m+1)-cy;
+          const o=document.createElement('canvas');o.width=cw;o.height=ch;o.getContext('2d').drawImage(c,cx,cy,cw,ch,0,0,cw,ch);
+          return res(o.toDataURL('image/png'));
+        }
+      }catch(e){}
+      res(c.toDataURL('image/png'));
+    };
+    img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('bad image'))};
+    img.src=url;
+  });
+}
+$('#signFile').addEventListener('change',async e=>{
+  const f=e.target.files&&e.target.files[0];if(!f)return;
+  try{app.inv.signImg=await cleanSignature(f);app.inv.sign=true;setVal('inv.sign');markEdited();renderDesign();schedule()}
+  catch(err){toast('That image could not be read. Try a PNG or JPG.')}
+  e.target.value='';
+});
+$('#signRemove').onclick=()=>{app.inv.signImg='';renderDesign();schedule()};
+
+/* ---------- move text: drag any block on the preview ---------- */
+const mv={on:false,sel:null,drag:null};
+const prevHostEl=$('#prevHost');
+const paperEl=()=>{const sc=prevHostEl.firstElementChild;return sc&&sc.firstElementChild};
+const movedCount=()=>{const p=app.inv.pos&&app.inv.pos[app.inv.layout];return p?Object.keys(p).length:0};
+function applyMoveUi(){
+  const p=paperEl();
+  if(p){p.classList.toggle('moving',mv.on);$$('[data-b]',p).forEach(e=>e.classList.toggle('sel',mv.on&&e.dataset.b===mv.sel))}
+  const b=$('#btnMove');
+  b.setAttribute('aria-pressed',String(mv.on));$('span',b).textContent=mv.on?'Done moving':'Move text';
+  $('#moveHint').hidden=!mv.on;
+  $('#btnMoveReset').hidden=!movedCount();
+}
+function setMove(on){mv.on=!!on;if(!on)mv.sel=null;applyMoveUi()}
+$('#btnMove').onclick=()=>setMove(!mv.on);
+$('#btnMoveReset').onclick=()=>{delete app.inv.pos[app.inv.layout];mv.sel=null;markEdited();schedule()};
+
+function commitPos(key,x,y){
+  const id=app.inv.layout;
+  if(!app.inv.pos)app.inv.pos={};
+  const t=app.inv.pos[id]||(app.inv.pos[id]={});
+  x=Math.max(-LIM,Math.min(LIM,Math.round(x)));y=Math.max(-LIM,Math.min(LIM,Math.round(y)));
+  if(x||y)t[key]=[x,y];else delete t[key];
+  if(!Object.keys(t).length)delete app.inv.pos[id];
+  markEdited();schedule();
+}
+/* edges other blocks and the page offer for snapping, in page pixels */
+function snapTargets(paper,el,k){
+  const pr=paper.getBoundingClientRect(),xs=[0,44,397,750,794],ys=[0,paper.offsetHeight/2];
+  $$('[data-b]',paper).forEach(o=>{
+    if(o===el||!o.getClientRects().length)return;
+    const r=o.getBoundingClientRect(),l=(r.left-pr.left)/k,rt=(r.right-pr.left)/k,t=(r.top-pr.top)/k,b=(r.bottom-pr.top)/k;
+    xs.push(l,(l+rt)/2,rt);ys.push(t,(t+b)/2,b);
+  });
+  return{xs,ys,pr};
+}
+function nearest(vals,list,thr){
+  let best=null;
+  vals.forEach(v=>list.forEach(t=>{const d=t-v;if(Math.abs(d)<=thr&&(best===null||Math.abs(d)<Math.abs(best.d)))best={d,at:t}}));
+  return best;
+}
+function guide(paper,cls,pos){
+  let g=$('.p-guide.'+cls,paper);
+  if(pos==null){if(g)g.remove();return}
+  if(!g){g=document.createElement('div');g.className='p-guide '+cls;paper.appendChild(g)}
+  if(cls==='gx')g.style.left=pos+'px';else g.style.top=pos+'px';
+}
+prevHostEl.addEventListener('pointerdown',e=>{
+  if(!mv.on||(e.pointerType==='mouse'&&e.button!==0))return;
+  const paper=paperEl(),el=e.target.closest&&e.target.closest('[data-b]');
+  if(!paper||!el||!paper.contains(el))return;
+  e.preventDefault();
+  const key=el.dataset.b,k=(prevHostEl.clientWidth/794)||1,o=posOf(app.inv,key),T=snapTargets(paper,el,k),r=el.getBoundingClientRect();
+  mv.sel=key;
+  $$('[data-b]',paper).forEach(x=>x.classList.toggle('sel',x===el));
+  mv.drag={el,key,k,id:e.pointerId,sx:e.clientX,sy:e.clientY,ox:o[0],oy:o[1],T,moved:false,
+    l:(r.left-T.pr.left)/k,r:(r.right-T.pr.left)/k,t:(r.top-T.pr.top)/k,b:(r.bottom-T.pr.top)/k,nx:o[0],ny:o[1]};
+  try{el.setPointerCapture(e.pointerId)}catch(err){}
+  el.classList.add('drag');
+});
+prevHostEl.addEventListener('pointermove',e=>{
+  const d=mv.drag;if(!d||e.pointerId!==d.id)return;
+  let dx=(e.clientX-d.sx)/d.k,dy=(e.clientY-d.sy)/d.k;
+  if(!d.moved){if(Math.hypot(dx,dy)*d.k<3)return;d.moved=true}
+  const paper=paperEl(),H=paper.offsetHeight,keep=28;
+  dx=Math.max(keep-d.r,Math.min(794-keep-d.l,dx));dy=Math.max(keep-d.b,Math.min(H-keep-d.t,dy));
+  const thr=5,sx=nearest([d.l+dx,(d.l+d.r)/2+dx,d.r+dx],d.T.xs,thr),sy=nearest([d.t+dy,(d.t+d.b)/2+dy,d.b+dy],d.T.ys,thr);
+  if(sx)dx+=sx.d;if(sy)dy+=sy.d;
+  guide(paper,'gx',sx?sx.at:null);guide(paper,'gy',sy?sy.at:null);
+  d.nx=Math.round(d.ox+dx);d.ny=Math.round(d.oy+dy);
+  d.el.style.cssText=posStyle(d.key,d.nx,d.ny);
+});
+function endDrag(e,cancel){
+  const d=mv.drag;if(!d||e.pointerId!==d.id)return;
+  mv.drag=null;d.el.classList.remove('drag');
+  const paper=paperEl();if(paper){guide(paper,'gx',null);guide(paper,'gy',null)}
+  if(d.moved&&!cancel)commitPos(d.key,d.nx,d.ny);
+  else if(d.moved){d.el.style.cssText=(d.ox||d.oy)?posStyle(d.key,d.ox,d.oy):''}
+}
+prevHostEl.addEventListener('pointerup',e=>endDrag(e,false));
+prevHostEl.addEventListener('pointercancel',e=>endDrag(e,true));
+/* arrow keys nudge the selected block: 1px, or 10px with Shift */
+document.addEventListener('keydown',e=>{
+  if(!mv.on)return;
+  const t=e.target,tag=t&&t.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'||(t&&t.isContentEditable))return;
+  if(e.key==='Escape'){setMove(false);return}
+  const dir={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[e.key];
+  if(!dir||!mv.sel)return;
+  e.preventDefault();
+  const o=posOf(app.inv,mv.sel),st=e.shiftKey?10:1;
+  commitPos(mv.sel,o[0]+dir[0]*st,o[1]+dir[1]*st);
+});
 
 /* ---------- tabs ---------- */
 const TABS=['details','design','send'];

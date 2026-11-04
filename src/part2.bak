@@ -1,0 +1,250 @@
+<body data-route="home">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-up" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V4h10v5M7 17H5v-6h14v6h-2M7 14h10v6H7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><path d="M9 9h11v11H9zM5 15V4h11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-img" viewBox="0 0 24 24"><path d="M4 5h16v14H4zM4 16l5-5 4 4 3-3 4 4M9 9h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 8v5M12 17h.01M10.3 4L2.8 17.5A2 2 0 004.5 20.5h15a2 2 0 001.7-3L13.7 4a2 2 0 00-3.4 0z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-new" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8zM14 3v5h5M12 12v6M9 15h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</defs></svg>
+
+<header class="top"><div class="wrap bar">
+  <a class="logo" href="#" aria-label="c.chumi home">c<i>.</i>chumi</a>
+  <nav class="nav nav-home" aria-label="Sections">
+    <a href="#features">Features</a><a href="#how">How it works</a><a href="#exact-total">Exact total tool</a>
+  </nav>
+  <nav class="nav nav-app" aria-label="Tools">
+    <a href="#invoice" data-nav="invoice">Invoice</a><a href="#exact-total" data-nav="tool">Exact total</a>
+  </nav>
+  <div class="bar-end">
+    <span class="saved" id="savedNote" role="status">Saved on this device</span>
+    <a class="btn btn-primary btn-sm cta-open" href="#invoice">Open invoice editor ↗</a>
+  </div>
+</div></header>
+
+<main>
+<!-- ================= HOME ================= -->
+<div data-view="home">
+  <section class="wrap hero">
+    <div>
+      <p class="eyebrow">Invoicing, without the busywork</p>
+      <h1>Good work deserves <mark>getting paid.</mark></h1>
+      <p class="lede">Fill in the details, pick a layout, and download a clean A4 PDF. No account, nothing uploaded, and the numbers always add up.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary btn-lg" href="#invoice">Create an invoice ↗</a>
+        <a class="btn btn-ghost btn-lg" href="#exact-total">Know your total? Build from it →</a>
+      </div>
+      <p class="fine">Free to use · No account needed</p>
+    </div>
+    <div class="book" role="img" aria-label="Sample invoice from Northstar Studio with three line items and a correct total">
+      <div class="sheet-host" id="heroSheet"><div class="scaler"></div></div>
+      <span class="ready"><svg class="ic"><use href="#i-check"/></svg>Ready to send</span>
+    </div>
+  </section>
+
+  <section class="sec" id="how"><div class="wrap">
+    <p class="eyebrow">How it works</p>
+    <h2>Three steps. One sheet of paper.</h2>
+    <ol class="steps">
+      <li><span class="n">01</span><h3>Add your details</h3><p>Your business, your client, the line items and the tax. The totals update as you type.</p><a class="link" href="#invoice" data-tab="details">Start with details →</a></li>
+      <li><span class="n">02</span><h3>Make it yours</h3><p>Pick one of 16 layouts, set an accent colour and drop in your logo.</p><a class="link" href="#invoice" data-tab="design">Choose a look →</a></li>
+      <li><span class="n">03</span><h3>Send it along</h3><p>Download the PDF, print it, or copy the invoice as text for an email.</p><a class="link" href="#invoice" data-tab="send">Get the PDF →</a></li>
+    </ol>
+  </div></section>
+
+  <section class="sec" id="features"><div class="wrap">
+    <p class="eyebrow">Features</p>
+    <h2>Everything on the page, nothing in the way.</h2>
+    <div class="feat">
+      <article class="fx"><div class="fx-vis" id="miniRow"><div class="mini" data-layout="modern"><div class="scaler"></div></div><div class="mini" data-layout="bold"><div class="scaler"></div></div><div class="mini" data-layout="ledger"><div class="scaler"></div></div></div>
+        <div><h3>A look that feels like you</h3><p>16 layouts, any accent colour, and your own logo. Switch layouts without retyping anything.</p></div></article>
+      <article class="fx"><div class="fx-vis"><div class="calc" id="homeCalc" aria-label="Example: subtotal 4,950.00 plus 8% tax makes 5,346.00"></div></div>
+        <div><h3>Numbers that add up</h3><p>Line items, discounts, currency and automatic tax, worked out to the cent. Prices can include tax or have it added on top.</p></div></article>
+      <article class="fx"><div class="fx-vis"><div class="chips"><span class="chip">Your business</span><span class="chip">Client details</span><span class="chip">Tax ID</span><span class="chip">Issue and due dates</span><span class="chip">PO reference</span><span class="chip">Bank details</span><span class="chip">Notes</span><span class="chip">Paid stamp</span></div></div>
+        <div><h3>All the important details</h3><p>Everything a client's accounts team asks for, in the places they expect to find it.</p></div></article>
+      <article class="fx"><div class="fx-vis"><div class="pdfmark">PDF</div></div>
+        <div><h3>A PDF, ready to go</h3><p>A live A4 preview shows exactly what you will send. Long invoices flow onto extra pages without cutting a row in half.</p></div></article>
+    </div>
+  </div></section>
+
+  <section class="sec" id="exact"><div class="wrap">
+    <div class="xband">
+      <div>
+        <p class="eyebrow">Exact total tool</p>
+        <h2>Know your total? Build from it.</h2>
+        <p>When a client has agreed on a number like 5,000.00 including tax, enter it and the line items. The tool works out a subtotal and tax that land on that figure exactly.</p>
+        <a class="btn btn-primary btn-lg" href="#exact-total">Build from a total →</a>
+      </div>
+      <div class="xcalc" id="homeX" aria-label="Worked example"></div>
+    </div>
+  </div></section>
+
+  <footer class="foot"><div class="wrap"><a class="logo" href="#" aria-label="c.chumi home">c<i>.</i>chumi</a><span>Free to use · No account needed · Saved only in your browser</span><a class="link" href="#invoice">Open the editor ↗</a></div></footer>
+</div>
+
+<!-- ================= INVOICE EDITOR ================= -->
+<div data-view="invoice" hidden>
+  <div class="wrap">
+    <div class="sample-note" id="sampleNote"><span>This is a sample invoice. Replace the details with your own.</span><button type="button" id="clearAll">Clear everything</button></div>
+    <div class="ed" id="ed" data-pane="form">
+      <div class="ed-form">
+        <div class="tabs" role="tablist" aria-label="Invoice steps">
+          <button class="tab" role="tab" id="tabbtn-details" aria-controls="tab-details" aria-selected="true"><span>01</span>Details</button>
+          <button class="tab" role="tab" id="tabbtn-design" aria-controls="tab-design" aria-selected="false" tabindex="-1"><span>02</span>Design</button>
+          <button class="tab" role="tab" id="tabbtn-send" aria-controls="tab-send" aria-selected="false" tabindex="-1"><span>03</span>Send</button>
+        </div>
+
+        <section id="tab-details" role="tabpanel" aria-labelledby="tabbtn-details">
+          <div class="card"><h3>Invoice</h3>
+            <div class="g2">
+              <div class="f"><label for="b-title">Document title</label><input id="b-title" type="text" data-bind="inv.title" autocomplete="off"></div>
+              <div class="f"><label for="b-number">Invoice number</label><input id="b-number" type="text" data-bind="inv.number" autocomplete="off"></div>
+              <div class="f"><label for="b-issue">Issue date</label><input id="b-issue" type="date" data-bind="inv.issue"></div>
+              <div class="f"><label for="b-terms">Payment terms</label>
+                <select id="b-terms" data-bind="inv.terms"><option value="0">Due on receipt</option><option value="7">Net 7 days</option><option value="14">Net 14 days</option><option value="30">Net 30 days</option><option value="45">Net 45 days</option><option value="60">Net 60 days</option><option value="custom">Custom due date</option></select></div>
+              <div class="f"><label for="b-due">Due date</label><input id="b-due" type="date" data-bind="inv.due"><span class="warn" id="dueWarn" hidden>The due date is before the issue date.</span></div>
+              <div class="f"><label for="b-po">PO or reference</label><input id="b-po" type="text" data-bind="inv.po" autocomplete="off"></div>
+              <div class="f span2"><label for="b-currency">Currency</label><select id="b-currency" data-bind="inv.currency"></select></div>
+            </div>
+          </div>
+
+          <div class="card"><h3>From<small>Your business</small></h3>
+            <div class="g2">
+              <div class="f span2"><label for="b-fname">Business name</label><input id="b-fname" type="text" data-bind="inv.from.name" autocomplete="organization"></div>
+              <div class="f"><label for="b-femail">Email</label><input id="b-femail" type="email" data-bind="inv.from.email" autocomplete="email"></div>
+              <div class="f"><label for="b-fphone">Phone</label><input id="b-fphone" type="text" data-bind="inv.from.phone" autocomplete="tel"></div>
+              <div class="f span2"><label for="b-faddr">Address</label><textarea id="b-faddr" rows="2" data-bind="inv.from.address" autocomplete="street-address"></textarea></div>
+              <div class="f span2"><label for="b-ftax">Tax or VAT ID</label><input id="b-ftax" type="text" data-bind="inv.from.taxId" autocomplete="off"></div>
+            </div>
+          </div>
+
+          <div class="card"><h3>Bill to<small>Your client</small></h3>
+            <div class="g2">
+              <div class="f"><label for="b-tname">Client name</label><input id="b-tname" type="text" data-bind="inv.to.name" autocomplete="off"></div>
+              <div class="f"><label for="b-tco">Company</label><input id="b-tco" type="text" data-bind="inv.to.company" autocomplete="off"></div>
+              <div class="f span2"><label for="b-temail">Email</label><input id="b-temail" type="email" data-bind="inv.to.email" autocomplete="off"></div>
+              <div class="f span2"><label for="b-taddr">Address</label><textarea id="b-taddr" rows="2" data-bind="inv.to.address"></textarea></div>
+              <div class="f span2"><label for="b-ttax">Tax or VAT ID</label><input id="b-ttax" type="text" data-bind="inv.to.taxId" autocomplete="off"></div>
+            </div>
+          </div>
+
+          <div class="card"><h3>Items</h3>
+            <div class="it it-head" aria-hidden="true"><span>Description</span><span>Qty</span><span>Rate</span><span>Amount</span><span></span></div>
+            <div id="itemList"></div>
+            <button class="btn btn-quiet btn-sm" id="addItem" type="button"><svg class="ic"><use href="#i-plus"/></svg>Add item</button>
+          </div>
+
+          <div class="card"><h3>Totals</h3>
+            <div class="g2">
+              <div class="f"><label for="b-dtype">Discount type</label><select id="b-dtype" data-bind="inv.discount.type"><option value="percent">Percent (%)</option><option value="fixed">Fixed amount</option></select></div>
+              <div class="f"><label for="b-dval">Discount</label><input id="b-dval" class="num" type="text" inputmode="decimal" data-bind="inv.discount.value" autocomplete="off"></div>
+              <div class="f"><label for="b-tlabel">Tax name</label><input id="b-tlabel" type="text" data-bind="inv.tax.label" autocomplete="off"></div>
+              <div class="f"><label for="b-trate">Tax rate (%)</label><input id="b-trate" class="num" type="text" inputmode="decimal" data-bind="inv.tax.rate" autocomplete="off"></div>
+              <label class="check span2"><input type="checkbox" data-bind="inv.tax.inclusive">Prices already include tax</label>
+              <div class="f"><label for="b-adj">Rounding adjustment</label><input id="b-adj" class="num" type="text" inputmode="decimal" data-bind="inv.adjustment" autocomplete="off"><span class="hint">Added after tax. Use a negative number to subtract.</span></div>
+              <div class="f"><label for="b-paid">Amount already paid</label><input id="b-paid" class="num" type="text" inputmode="decimal" data-bind="inv.paid" autocomplete="off"></div>
+            </div>
+            <div class="readout" id="sumReadout" aria-live="polite"></div>
+          </div>
+
+          <div class="card"><h3>Notes and payment</h3>
+            <div class="stack">
+              <div class="f"><label for="b-pay">Payment details</label><textarea id="b-pay" rows="3" data-bind="inv.payment"></textarea></div>
+              <div class="f"><label for="b-notes">Notes</label><textarea id="b-notes" rows="3" data-bind="inv.notes"></textarea></div>
+              <div class="f"><label for="b-foot">Footer</label><input id="b-foot" type="text" data-bind="inv.footer" autocomplete="off"></div>
+            </div>
+          </div>
+          <div class="nextrow"><span></span><button class="btn btn-primary" type="button" data-goto="design">Next: choose a design →</button></div>
+        </section>
+
+        <section id="tab-design" role="tabpanel" aria-labelledby="tabbtn-design" hidden>
+          <div class="card"><h3>Layout<small>16 to choose from</small></h3>
+            <div class="laygrid" id="layGrid" role="radiogroup" aria-label="Layout"></div>
+          </div>
+          <div class="card"><h3>Accent colour</h3>
+            <div class="stack">
+              <div class="swatches" id="swatches" role="radiogroup" aria-label="Accent colour"></div>
+              <div class="colorpick"><input id="accentCustom" type="color" data-bind="inv.accent" aria-label="Custom accent colour"><label for="accentCustom">Pick any colour</label></div>
+            </div>
+          </div>
+          <div class="card"><h3>Logo and stamp</h3>
+            <div class="stack">
+              <div class="logoline" id="logoLine">
+                <span class="btn btn-quiet btn-sm filebtn"><svg class="ic"><use href="#i-img"/></svg>Upload logo<input id="logoFile" type="file" accept="image/*" aria-label="Upload logo"></span>
+                <img id="logoPrev" alt="Your logo" hidden>
+                <button class="btn btn-quiet btn-sm" id="logoRemove" type="button" hidden>Remove logo</button>
+              </div>
+              <div class="f"><label for="b-stamp">Status stamp</label><select id="b-stamp" data-bind="inv.stamp"><option value="none">No stamp</option><option value="paid">Paid</option><option value="overdue">Overdue</option><option value="draft">Draft</option></select></div>
+            </div>
+          </div>
+          <div class="nextrow"><button class="btn btn-quiet" type="button" data-goto="details">← Details</button><button class="btn btn-primary" type="button" data-goto="send">Next: send it →</button></div>
+        </section>
+
+        <section id="tab-send" role="tabpanel" aria-labelledby="tabbtn-send" hidden>
+          <div class="card"><h3>Get your invoice</h3>
+            <div class="sendbox">
+              <button class="btn btn-primary btn-block" id="btnPdf" type="button"><svg class="ic"><use href="#i-dl"/></svg><span>Download PDF</span></button>
+              <span class="filename" id="fileName"></span>
+              <button class="btn btn-quiet btn-block" id="btnPrint" type="button"><svg class="ic"><use href="#i-print"/></svg>Print</button>
+              <button class="btn btn-quiet btn-block" id="btnCopy" type="button"><svg class="ic"><use href="#i-copy"/></svg>Copy as text</button>
+              <p class="note">Your invoice stays in this browser. Nothing is uploaded.</p>
+            </div>
+          </div>
+          <div class="card"><h3>Next invoice</h3>
+            <div class="sendbox">
+              <button class="btn btn-quiet btn-block" id="btnNew" type="button"><svg class="ic"><use href="#i-new"/></svg>New invoice, keep my business details</button>
+              <p class="note">Starts a blank invoice with the next number. Your business details, design and tax settings carry over.</p>
+            </div>
+          </div>
+          <div class="nextrow"><button class="btn btn-quiet" type="button" data-goto="design">← Design</button><span></span></div>
+        </section>
+      </div>
+
+      <aside class="ed-pre" aria-label="Invoice preview">
+        <div class="pre-head"><span>Live preview</span><span id="pageCount">A4 · 1 page</span></div>
+        <div class="desk"><div class="sheet-host" id="prevHost"><div class="scaler"></div></div></div>
+      </aside>
+    </div>
+  </div>
+  <div class="mseg" role="group" aria-label="Edit or preview"><button type="button" data-pane="form" aria-pressed="true">Edit</button><button type="button" data-pane="preview" aria-pressed="false">Preview</button></div>
+</div>
+
+<!-- ================= EXACT TOTAL ================= -->
+<div data-view="tool" hidden>
+  <div class="wrap">
+    <h1 class="page-title">Build an invoice from a known total.</h1>
+    <p class="page-sub">Enter the exact amount your client agreed to pay and the items to split it across. The tool finds a subtotal and tax that land on that figure to the cent.</p>
+    <div class="xt">
+      <div>
+        <div class="card"><h3>The total</h3>
+          <div class="g2">
+            <div class="f"><label for="x-total">Exact total</label><input id="x-total" class="num" type="text" inputmode="decimal" data-bind="xt.total" autocomplete="off"></div>
+            <div class="f"><label for="x-cur">Currency</label><select id="x-cur" data-bind="inv.currency"></select></div>
+            <div class="f span2"><span class="lab" id="x-mode-l">This total</span>
+              <div class="seg" role="radiogroup" aria-labelledby="x-mode-l">
+                <label><input type="radio" name="xmode" value="incl" data-bind="xt.mode"><span>Includes tax</span></label>
+                <label><input type="radio" name="xmode" value="excl" data-bind="xt.mode"><span>Tax added on top</span></label>
+              </div></div>
+            <div class="f"><label for="x-tl">Tax name</label><input id="x-tl" type="text" data-bind="xt.taxLabel" autocomplete="off"></div>
+            <div class="f"><label for="x-tr">Tax rate (%)</label><input id="x-tr" class="num" type="text" inputmode="decimal" data-bind="xt.taxRate" autocomplete="off"></div>
+          </div>
+        </div>
+        <div class="card"><h3>Items<small>Share sets the proportion. A fixed amount stays as typed.</small></h3>
+          <div class="xr xr-head" aria-hidden="true"><span>Description</span><span>Share</span><span>Fixed amount</span><span></span></div>
+          <div id="xList"></div>
+          <button class="btn btn-quiet btn-sm" id="xAdd" type="button"><svg class="ic"><use href="#i-plus"/></svg>Add item</button>
+        </div>
+      </div>
+      <aside class="result" aria-live="polite" id="xResult"></aside>
+    </div>
+  </div>
+</div>
+</main>
+
+<div id="printSheet" aria-hidden="true"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
